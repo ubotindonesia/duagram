@@ -1,6 +1,6 @@
 module.exports = {
     name: 'duaGram',
-    number: '1.0.0',
+    number: '1.1.0',
     desc: 'Telegram Bot Framework',
     repo: 'https://github.com/ubotindonesia/duagram',
     url: 'https://t.me/ubotindonesia',
@@ -18,5 +18,5 @@ module.exports = {
         web: 'https://banghasan.com'
     },
 
-    system: `${process.platform} ${process.arch} NodeJS ${process.version}`
+    system: `${process.platform} ${process.arch} nodejs ${process.version}`
 }

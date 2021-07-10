@@ -1,4 +1,4 @@
-const { duaGram, terminal, lessLog } = require("duagram");
+const { duaGram, terminal, lessLog, Helper } = require("duagram");
 
 const bot = new duaGram({
     api_id: 1,
@@ -44,34 +44,37 @@ bot.cmd('upload', async (ctx) => {
 bot.cmd('start', async (ctx) => {
     // message in only
     if (!ctx.out) {
+
+        if (!bot.asBotApi) return false;
+
         // if Bot API, send with Bot API can too
-        if (bot.asBotApi) {
-            let chat_id = bot.peerGetId(ctx);
 
-            let reply_markup = JSON.stringify({
-                inline_keyboard: [
-                    [
-                        Helper.Button.url('👥 uBotIndonesia', 'https://t.me/ubotindonesia')
-                    ], [
-                        Helper.Button.text('One', 'cb1'),
-                        Helper.Button.text('Two', 'cb2')
-                    ]
+        let chat_id = bot.peerGetId(ctx);
+
+        let reply_markup = JSON.stringify({
+            inline_keyboard: [
+                [
+                    Helper.Button.url('👥 uBotIndonesia', 'https://t.me/ubotindonesia')
+                ], [
+                    Helper.Button.text('One', 'cb1'),
+                    Helper.Button.text('Two', 'cb2')
                 ]
-            });
+            ]
+        });
 
-            let more = {
-                parse_mode: 'html',
-                reply_markup
-            }
-
-            await bot.BotApi.sendMessage(chat_id, 'This message from <b>Bot Api</b>', more)
-                .then(result => {
-                    terminal.log('Result: BotApi sendMessage')
-                    console.log(result);
-                })
-                .catch(error => terminal.error(error.message));
-
+        let more = {
+            parse_mode: 'html',
+            reply_markup
         }
+
+        await bot.BotApi.sendMessage(chat_id, 'This message from <b>Bot Api</b>', more)
+            .then(result => {
+                terminal.log('Result: BotApi sendMessage')
+                console.log(result);
+            })
+            .catch(error => terminal.error(error.message));
+
+
     }
 });
 

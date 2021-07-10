@@ -10,6 +10,7 @@ class DuaEvent extends EventEmitter {
         this.telegram = false;
         this.client = false;
         this.scanners = [];
+        this.middlewares = []
     }
 
     init(options) {
@@ -18,6 +19,9 @@ class DuaEvent extends EventEmitter {
             if (!options.api_id) throw Error('api_id is required.');
             if (!options.api_hash) throw Error('api_hash is required.');
             if (parseInt(options.api_id) < 5000) throw Error('api_id - get it from https://my.telegram.org');
+            if (options.cmdPrefix) {
+                this.cmdPrefix = options.cmdPrefix;
+            }
 
             options.session = options.session || '';
             options.logDetail = options.logDetail || 'debug';
@@ -49,6 +53,23 @@ class DuaEvent extends EventEmitter {
         return str;
     }
 
+    processMessage(ctx) {
+        if (this.middlewares.length === 0) {
+            return this.scanningText(ctx);
+        }
+
+        const nextFunction = (ctx, index = 1) => {
+            return () => {
+                if (!this.middlewares[index]) {
+                    return this.scanningText(ctx);
+                }
+
+                return this.middlewares[index](ctx, nextFunction(ctx, index + 1));
+            }
+        }
+        return this.middlewares[0](ctx, nextFunction(ctx));
+    }
+
     scanningText(ctx) {
         let text = ctx.message;
         let found = false; let matchPattern = [];
@@ -58,7 +79,7 @@ class DuaEvent extends EventEmitter {
             terminal.debug('Scanners empty');
             return false;
         }
-        
+
         this.scanners.forEach((scanner) => {
             let { key, callback, stop } = scanner;
             // terminal.debug('scanning:', `${key} match with ${text}?`);
@@ -66,7 +87,7 @@ class DuaEvent extends EventEmitter {
             if (key instanceof RegExp) {
                 let match;
                 if (match = key.exec(text)) {
-                    found = true; walk = stop; 
+                    found = true; walk = stop;
                     matchPattern.push(key);
                     ctx.match = match;
                     return callback(ctx);
@@ -101,6 +122,10 @@ class DuaEvent extends EventEmitter {
     command(str, callback, stop = true) {
         let key = new RegExp(`^[${this.escapeRegExp(this.cmdPrefix)}]${str}$`, "i");
         return this.scanners.push({ key, callback, stop })
+    }
+
+    middleware(callback) {
+        this.middlewares.push(callback);
     }
 
 }

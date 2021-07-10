@@ -32,6 +32,12 @@ bot.hear(/^(hi|hel+o+)/i, async (ctx) => {
     }
 });
 
+bot.cmd('version', (ctx) => {
+    if (!ctx.out) {
+        return bot.sendMessage(ctx, `<code>${JSON.stringify(bot.version, null, 2)}<code>`, { parse_mode: 'HTML' });
+    }
+});
+
 bot.cmd('upload', async (ctx) => {
     if (!ctx.out) {
         terminal.info('Starting upload...');

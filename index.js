@@ -5,6 +5,7 @@ const Helper = require('./utils');
 class duaGram extends DuaGram {
     constructor(options) {
         super(options);
+        this.Helper = Helper;
     }
 
     get version() {

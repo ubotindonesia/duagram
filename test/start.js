@@ -19,10 +19,14 @@ const bot = new duaGram(options);
     console.log(ctx);
 }); */
 
-bot.hear('hi bro', async (ctx) => {
-    lessLog(ctx);
+bot.middleware((ctx, next) => {
+    ctx.additional = 'message test from middleware';
+    next();
+});
+
+bot.cmd('plus', async (ctx) => {
     if (!ctx.out)
-        return bot.sendMessage(ctx, 'Hi, too..', { replyToMsgId: ctx.id }).catch(error => terminal.error(error.message));
+        return bot.sendMessage(ctx, `Hooked: ${ctx.additional}`);
 })
 
 bot.cmd('upload', async (ctx) => {
@@ -40,13 +44,19 @@ bot.cmd('ping', async (ctx) => {
         let res = await bot.sendMessage(ctx, '**Pong**!', { parse_mode: 'markdown' });
         let t1 = performance.now();
         let diff = '<code>' + ((t1 - t0) / 1000).toLocaleString('id-ID', { maximumFractionDigits: 3 }) + "</code>"
-        return await bot.editMessage(ctx, res.id, `Pong!\nIn ${diff} seconds.`, { parse_mode: 'html' });
+        return bot.editMessage(ctx, res.id, `Pong!\nIn ${diff} seconds.`, { parse_mode: 'html' });
     }
 });
 
 bot.cmd('delete', async (ctx) => {
     if (!ctx.out) {
         await bot.deleteMessages(ctx, ctx.id)
+    }
+});
+
+bot.cmd('version', (ctx) => {
+    if (!ctx.out) {
+        return bot.sendMessage(ctx, `<code>${JSON.stringify(bot.version, null, 2)}<code>`, { parse_mode: 'HTML' });
     }
 });
 

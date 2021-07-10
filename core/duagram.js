@@ -70,15 +70,16 @@ class DuaGram extends DuaEvent {
             });
             this.asBotApi = false;
             as_bot_api_info = 'userbot';
+
+            let loggedSession = client.session.save();
+            terminal.log("This session:");
+            console.log(loggedSession);
         }
         terminal.warn(`You login as [${as_bot_api_info}]`)
         let tg = new Telegram(client);
         this.telegram = tg;
-        
-        let loggedSession = client.session.save();
-        terminal.log("This session:");        
-        console.log(loggedSession);
-        if(!loggedSession) {
+
+        if (!loggedSession) {
             terminal.error("Cannot operate.");
             process.exit();
         }
@@ -94,7 +95,8 @@ class DuaGram extends DuaEvent {
 
             if (ctx.media) this.emit('media', ctx);
             if (ctx.message) {
-                this.scanningText(message);
+                // this.scanningText(message);
+                this.processMessage(message);
             }
 
         }, new NewMessage({}));

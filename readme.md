@@ -1,11 +1,16 @@
 ## duaGram
 
-Telegram Framework for userbot and or bot api.
+Telegram Framework for userbot and or bot api, using nodejs.
 
-![GitHub last commit](https://img.shields.io/github/last-commit/ubotindonesia/duagram) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/ubotindonesia/duagram) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ubotindonesia/duagram) ![GitHub issues](https://img.shields.io/github/issues/ubotindonesia/duagram) ![javascript](https://img.shields.io/badge/lang-javascript-red)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/ubotindonesia/duagram) ![GitHub last commit](https://img.shields.io/github/last-commit/ubotindonesia/duagram) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ubotindonesia/duagram?color=fef) ![GitHub repo size](https://img.shields.io/github/repo-size/ubotindonesia/duagram?color=fee) ![Lines of code](https://img.shields.io/tokei/lines/github/ubotindonesia/duagram?color=dee) ![GitHub top language](https://img.shields.io/github/languages/top/ubotindonesia/duagram?color=dee)  ![GitHub all releases](https://img.shields.io/github/downloads/ubotindonesia/duagram/total) ![npm](https://img.shields.io/npm/dt/duagram) ![GitHub issues](https://img.shields.io/github/issues/ubotindonesia/duagram) 
 
 
 ![duagram](https://github.com/ubotindonesia/duagram/raw/main/asset/2gram%20banner%20small.jpg)
+
+
+![GitHub forks](https://img.shields.io/github/forks/ubotindonesia/duagram?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/ubotindonesia/duagram?style=social)
+![GitHub Repo stars](https://img.shields.io/github/stars/ubotindonesia/duagram?style=social)
 
 ### WARNING!
 
@@ -16,8 +21,9 @@ Use at Your Own Risk.
 ### Support
 
 - [Issues](https://github.com/ubotindonesia/duagram/issues)
+- Contributor are welcome...
 
-## Quick Start
+## Start
 
 ### Install
 
@@ -31,7 +37,7 @@ or
 
 `pnpm add duagram`
 
-## Simple
+## Quick Start
 
 ```javascript
 const { duaGram } = require("duagram");
@@ -44,12 +50,26 @@ const bot = new duaGram({
 bot.cmd('ping', async (ctx) => {
     // message in only
     if (!ctx.out) {
-        await bot.sendMessage(ctx, '**Pong**!', { parse_mode: 'markdown' });
+        bot.sendMessage(ctx, '**Pong**!', { parse_mode: 'markdown' });
     }
 });
 
 bot.start();
 ```
+
+## API TELEGRAM
+
+To use the duaGram, you first have to get API ID dan API HASH.
+
+Get it from [https://my.telegram.org](https://my.telegram.org)
+
+
+### Token Bot
+
+If you connect use Bot API, get a bot account by chatting with [BotFather](https://core.telegram.org/bots#6-botfather).
+
+BotFather will give you a token, something like `123456789:AbCdfGhIJKlmNoQQRsTUVwxyZ`.
+
 
 ## More Example
 
@@ -119,7 +139,7 @@ bot.start();
 ### Bot Login
 
 ```javascript
-const { duaGram, terminal, lessLog } = require("duagram");
+const { duaGram, terminal, Helper, lessLog } = require("duagram");
 
 const bot = new duaGram({
     api_id: 1,
@@ -165,34 +185,37 @@ bot.cmd('upload', async (ctx) => {
 bot.cmd('start', async (ctx) => {
     // message in only
     if (!ctx.out) {
+
+        if (!bot.asBotApi) return false;
+
         // if Bot API, send with Bot API can too
-        if (bot.asBotApi) {
-            let chat_id = bot.peerGetId(ctx);
 
-            let reply_markup = JSON.stringify({
-                inline_keyboard: [
-                    [
-                        Helper.Button.url('👥 uBotIndonesia', 'https://t.me/ubotindonesia')
-                    ], [
-                        Helper.Button.text('One', 'cb1'),
-                        Helper.Button.text('Two', 'cb2')
-                    ]
+        let chat_id = bot.peerGetId(ctx);
+
+        let reply_markup = JSON.stringify({
+            inline_keyboard: [
+                [
+                    Helper.Button.url('👥 uBotIndonesia', 'https://t.me/ubotindonesia')
+                ], [
+                    Helper.Button.text('One', 'cb1'),
+                    Helper.Button.text('Two', 'cb2')
                 ]
-            });
+            ]
+        });
 
-            let more = {
-                parse_mode: 'html',
-                reply_markup
-            }
-
-            await bot.BotApi.sendMessage(chat_id, 'This message from <b>Bot Api</b>', more)
-                .then(result => {
-                    terminal.log('Result: BotApi sendMessage')
-                    console.log(result);
-                })
-                .catch(error => terminal.error(error.message));
-
+        let more = {
+            parse_mode: 'html',
+            reply_markup
         }
+
+        await bot.BotApi.sendMessage(chat_id, 'This message from <b>Bot Api</b>', more)
+            .then(result => {
+                terminal.log('Result: BotApi sendMessage')
+                console.log(result);
+            })
+            .catch(error => terminal.error(error.message));
+
+
     }
 });
 
@@ -213,7 +236,7 @@ Definitions of object peer:
 
 - message
 - entity
-- virtual class of user/channel
+- virtual class of user/channel (object)
 - string (username)
 - number (chat_id)
 
@@ -223,8 +246,9 @@ Definitions of object peer:
 - `sendMessage('username', 'hi');`
 - `sendMessage(213567634, 'hi');`
 - `sendMessage(ctx, 'hi');`
-- `sendMessage(ctx.message, 'hi');`
-- `sendMessage(ctx.userID, 'hi');`
+- `sendMessage(ctx.message, 'hi');` // if `ctx.message` is object, not string
+- `sendMessage(ctx.userId, 'hi');` // if `ctx.userID` is object, not number
+- `sendMessage(ctx.peerId, 'hi');` 
 
 ### Options
 
@@ -233,28 +257,30 @@ Definitions of object peer:
 
 | **Item**            | **Description**                                                | **Default** |
 | --------------------- | ---------------------------------------------------------------- | ------------- |
-| api\_id             | get it from[https://my.telegram.org](https://my.telegram.org/) |             |
-| api\_hash           | get it from[https://my.telegram.org](https://my.telegram.org/) |             |
+| api\_id             | get it from [https://my.telegram.org](https://my.telegram.org/) |             |
+| api\_hash           | get it from [https://my.telegram.org](https://my.telegram.org/) |             |
 | session             | String session                                                 |             |
 | logLevel            | Show log level 0 off, 1 event name, 2 detail                   | 1           |
 | logDetail           | Event Detail (none, error, warn, info, debug)                  | debug       |
 | as\_bot\_api        | Login as bot API? 0 false / 1 true                             | 0           |
-| bot\_token          | Token Bot API[@botfahter](https://t.me/botfather)              |             |
+| bot\_token          | Token Bot API [@botfahter](https://t.me/botfather)             |             |
 | connectionRetries   | Connection Retry                                               | 3           |
 | floodSleepThreshold | FloodWait error ? Set this                                     | 60          |
 | markRead            | Mark message history as read                                   | TRUE        |
+| cmdPrefix           | prefix for command trigger                                     | `!/.`
 
 ### Event
-
-Default `command` prefix is `!/.`
 
 Example:
 
 ```javascript
 bot.cmd('ping', callback);
-```
+bot.hear('hello', callback);
+bot.hear(/^!time$/i, callback);
 
-this for: `/ping`, `!ping`, or `.ping`
+bot.hear(/coffee/i, callback, false); // if found stopable? false. So, catch condition anatoher again bellow
+bot.hear(/tea/i, callback);
+```
 
 Available now:
 
@@ -263,7 +289,7 @@ Available now:
 - hears(`regex|string, callback, stop=true`) alias hear
 - **command** alias `cmd`
 
-### Signal On
+### Update Type
 
 Example:
 
@@ -295,14 +321,15 @@ Method or Accessors of duaGram.
 | method    | description                                                       |
 | ----------- | ------------------------------------------------------------------- |
 | telegram  | collection function duagram                                       |
-| Api       | access for[API Telegram](https://core.telegram.org/)              |
+| Api       | access for [API Telegram](https://core.telegram.org/)              |
 | client    | client connecton                                                  |
-| BotApi    | wrapper for[Bot Api Telegram](https://core.telegram.org/bots/api) |
+| BotApi    | wrapper for [Bot Api Telegram](https://core.telegram.org/bots/api) |
 | terminal  | console replacement for colorful and bettermore                   |
 | lessLog   | better than`console.log` function, less prefix \_ field           |
 | asBotApi  | `true`/`false`                                                    |
 | version   | duagrams version info                                             |
 | cmdPrefix | default is`.!/`                                                   |
+| Helper    | [Go to helper doc](https://github.com/ubotindonesia/duagram/blob/main/docs/helper.md)                                                          |
 
 Example:
 
@@ -334,6 +361,28 @@ console.log(bot.version);
 - editMessage(`peer, id, text, more`)
 - deleteMessages(`peer, ids, more`)
 - readHistory(`peer, more`)
+
+
+## Middleware
+
+Middleware is an essential part of any modern framework. It allows you to modify requests and responses as they pass between the Telegram and your bot.
+
+You can imagine middleware as a chain of logic connection your bot to the Telegram request.
+
+Middleware normally takes two parameters `(ctx, next)`, `ctx` is the context for one Telegram update, `next` is a function that is invoked to execute the downstream middleware. It returns a Promise with a then function for running code after completion.
+
+```javascript
+bot.middleware((ctx, next) => {
+    ctx.additional = 'message test from middleware';
+    next();
+});
+
+bot.cmd('plus', async (ctx) => {   
+    if (!ctx.out)
+        return bot.sendMessage(ctx, `Hooked: ${ctx.additional}`);
+})
+```
+
 
 ## client
 
