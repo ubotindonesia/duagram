@@ -2,21 +2,24 @@
 
 Telegram Framework for userbot and or bot api, using nodejs.
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/ubotindonesia/duagram) ![GitHub last commit](https://img.shields.io/github/last-commit/ubotindonesia/duagram) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ubotindonesia/duagram?color=fef) ![GitHub repo size](https://img.shields.io/github/repo-size/ubotindonesia/duagram?color=fee) ![Lines of code](https://img.shields.io/tokei/lines/github/ubotindonesia/duagram?color=dee) ![GitHub top language](https://img.shields.io/github/languages/top/ubotindonesia/duagram?color=dee)  ![GitHub all releases](https://img.shields.io/github/downloads/ubotindonesia/duagram/total) ![npm](https://img.shields.io/npm/dt/duagram) ![GitHub issues](https://img.shields.io/github/issues/ubotindonesia/duagram) 
+![GitHub last commit](https://img.shields.io/github/last-commit/ubotindonesia/duagram) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/ubotindonesia/duagram) ![npm](https://img.shields.io/npm/v/duagram) ![node-current](https://img.shields.io/node/v/duagram?color=red) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ubotindonesia/duagram?color=fef) ![GitHub repo size](https://img.shields.io/github/repo-size/ubotindonesia/duagram?color=fee) ![Lines of code](https://img.shields.io/tokei/lines/github/ubotindonesia/duagram?color=dee) ![GitHub top language](https://img.shields.io/github/languages/top/ubotindonesia/duagram?color=dee)  ![GitHub all releases](https://img.shields.io/github/downloads/ubotindonesia/duagram/total) ![GitHub Discussions](https://img.shields.io/github/discussions/ubotindonesia/duagram) ![npm](https://img.shields.io/npm/dt/duagram?color=blue) ![GitHub pull requests](https://img.shields.io/github/issues-pr/ubotindonesia/duagram) ![GitHub issues](https://img.shields.io/github/issues/ubotindonesia/duagram) 
 
 
 ![duagram](https://github.com/ubotindonesia/duagram/raw/main/asset/2gram%20banner%20small.jpg)
 
 
-![GitHub forks](https://img.shields.io/github/forks/ubotindonesia/duagram?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/ubotindonesia/duagram?style=social)
-![GitHub Repo stars](https://img.shields.io/github/stars/ubotindonesia/duagram?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/ubotindonesia/duagram?style=social) ![GitHub forks](https://img.shields.io/github/forks/ubotindonesia/duagram?style=social)
+![GitHub Repo stars](https://img.shields.io/github/stars/ubotindonesia/duagram?style=social) 
 
 ### WARNING!
 
 Use at Your Own Risk.
 
 > I don't take any responsibility from actions made by you or on your account.
+
+### History
+
+- [Release](https://github.com/ubotindonesia/duagram/releases)
 
 ### Support
 
