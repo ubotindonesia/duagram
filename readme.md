@@ -2,17 +2,20 @@
 
 Telegram Framework for userbot and or bot api.
 
+![GitHub last commit](https://img.shields.io/github/last-commit/ubotindonesia/duagram) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/ubotindonesia/duagram) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ubotindonesia/duagram) ![GitHub issues](https://img.shields.io/github/issues/ubotindonesia/duagram) ![javascript](https://img.shields.io/badge/lang-javascript-red)
+
+
+![duagram](https://github.com/ubotindonesia/duagram/raw/main/asset/2gram%20banner%20small.jpg)
 
 ### WARNING!
 
 Use at Your Own Risk.
 
-> I don't take any responsibility from actions made by you or on your account. 
+> I don't take any responsibility from actions made by you or on your account.
 
 ### Support
 
 - [Issues](https://github.com/ubotindonesia/duagram/issues)
-
 
 ## Quick Start
 
@@ -227,27 +230,30 @@ Definitions of object peer:
 
 `const bot = new duaGram(options);`
 
-| **Item**            | **Description**                                                 | **Default** |
-| ------------------- | --------------------------------------------------------------- | ----------- |
-| api\_id             | get it from [https://my.telegram.org](https://my.telegram.org/) |             |
-| api\_hash           | get it from [https://my.telegram.org](https://my.telegram.org/) |             |
-| session             | String session                                                  |             |
-| logLevel            | Show log level 0 off, 1 event name, 2 detail                    | 1           |
-| logDetail           | Event Detail (none, error, warn, info, debug)                   | debug       |
-| as\_bot\_api        | Login as bot API? 0 false / 1 true                              | 0           |
-| bot\_token          | Token Bot API [@botfahter](https://t.me/botfather)              |             |
-| connectionRetries   | Connection Retry                                                | 3           |
-| floodSleepThreshold | FloodWait error ? Set this                                      | 60          |
-| markRead            | Mark message history as read                                    | TRUE        |
+
+| **Item**            | **Description**                                                | **Default** |
+| --------------------- | ---------------------------------------------------------------- | ------------- |
+| api\_id             | get it from[https://my.telegram.org](https://my.telegram.org/) |             |
+| api\_hash           | get it from[https://my.telegram.org](https://my.telegram.org/) |             |
+| session             | String session                                                 |             |
+| logLevel            | Show log level 0 off, 1 event name, 2 detail                   | 1           |
+| logDetail           | Event Detail (none, error, warn, info, debug)                  | debug       |
+| as\_bot\_api        | Login as bot API? 0 false / 1 true                             | 0           |
+| bot\_token          | Token Bot API[@botfahter](https://t.me/botfather)              |             |
+| connectionRetries   | Connection Retry                                               | 3           |
+| floodSleepThreshold | FloodWait error ? Set this                                     | 60          |
+| markRead            | Mark message history as read                                   | TRUE        |
 
 ### Event
 
 Default `command` prefix is `!/.`
 
 Example:
+
 ```javascript
 bot.cmd('ping', callback);
 ```
+
 this for: `/ping`, `!ping`, or `.ping`
 
 Available now:
@@ -259,7 +265,7 @@ Available now:
 
 ### Signal On
 
-Example: 
+Example:
 
 ```javascript
 bot.on('raw', (ctx) => lessLog(ctx) );
@@ -281,22 +287,22 @@ Class name event example:
 - UpdateUserTyping
 - etc... [schema](https://core.telegram.org/schema)
 
-
 ### Properties
 
 Method or Accessors of duaGram.
 
-| method   | description                                       |
-| -------- | ------------------------------------------------- |
-| telegram | collection function duagram                       |
-| Api      | access for [API Telegram](https://core.telegram.org/)                    |
-| client   | client connecton                                  |
-| BotApi   | wrapper for [Bot Api Telegram](https://core.telegram.org/bots/api) |
-| terminal | console replacement for colorful and bettermore   |
-| lessLog  | better than `console.log` function, less prefix \_ field |
-| asBotApi | `true`/`false`                                        |
-| version  | duagrams version info                             |
-| cmdPrefix| default is `.!/` |
+
+| method    | description                                                       |
+| ----------- | ------------------------------------------------------------------- |
+| telegram  | collection function duagram                                       |
+| Api       | access for[API Telegram](https://core.telegram.org/)              |
+| client    | client connecton                                                  |
+| BotApi    | wrapper for[Bot Api Telegram](https://core.telegram.org/bots/api) |
+| terminal  | console replacement for colorful and bettermore                   |
+| lessLog   | better than`console.log` function, less prefix \_ field           |
+| asBotApi  | `true`/`false`                                                    |
+| version   | duagrams version info                                             |
+| cmdPrefix | default is`.!/`                                                   |
 
 Example:
 
