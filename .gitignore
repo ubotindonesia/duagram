@@ -1,0 +1,7 @@
+.idea
+.test
+.env*
+.data
+ref
+bak
+node_modules

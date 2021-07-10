@@ -1,0 +1,36 @@
+{
+  "name": "duagram",
+  "version": "1.0.0",
+  "description": "Telegram Framework for userbot and or bot api",
+  "main": "index.js",
+  "homepage": "https://t.me/ubotindonesia",
+  "bugs": "https://github.com/ubotindonesia/duagram/issues",
+  "repository": "https://github.com/ubotindonesia/duagram",
+  "scripts": {
+    "test": "node test/simple.js"
+  },
+  "keywords": [
+    "nodejs",
+    "telegram",
+    "userbot",
+    "mtproto",
+    "telegrambot",
+    "indonesia"
+  ],
+  "author": "Hasanudin H. Syafaat",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "better-logging": "^4.5.0",
+    "dotenv": "^10.0.0",
+    "input": "^1.0.1",
+    "request-promise": "^4.2.6",
+    "telegram": "1.7.5"
+  },
+  "engines": {
+    "node": ">=14.x"
+  },
+  "devDependencies": {
+    "json-stringify-safe": "^5.0.1"
+  }
+}
