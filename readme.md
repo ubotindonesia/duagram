@@ -81,7 +81,7 @@ BotFather will give you a token, something like `123456789:AbCdfGhIJKlmNoQQRsTUV
 ### User Login
 
 ```javascript
-const { duaGram, terminal, lessLog } = require("duagram");
+const { duaGram, terminal } = require("duagram");
 const { performance } = require('perf_hooks');
 
 const bot = new duaGram({
@@ -104,7 +104,7 @@ const bot = new duaGram({
 // event all new message
 bot.on('message', async (ctx) => {
     // simple log
-    lessLog(ctx);
+    terminal.less(ctx);
 });
 
 bot.cmd('ping', async (ctx) => {
@@ -119,7 +119,7 @@ bot.cmd('ping', async (ctx) => {
 });
 
 bot.hear(/^(hi|hel+o+)/i, async (ctx) => {
-    // lessLog(ctx);
+    // terminal.less(ctx);
 
     // message in only
     if (!ctx.out) {
@@ -142,7 +142,7 @@ bot.start();
 ### Bot Login
 
 ```javascript
-const { duaGram, terminal, Helper, lessLog } = require("duagram");
+const { duaGram, terminal, Helper } = require("duagram");
 
 const bot = new duaGram({
     api_id: 1,
@@ -157,7 +157,7 @@ const bot = new duaGram({
 // event all new message
 bot.on('message', async (ctx) => {
     // simple log
-    lessLog(ctx);
+    terminal.less(ctx);
 });
 
 bot.cmd('ping', async (ctx) => {
@@ -168,7 +168,7 @@ bot.cmd('ping', async (ctx) => {
 });
 
 bot.hear(/^(hi|hel+o+)/i, async (ctx) => {
-    // lessLog(ctx);
+    // terminal.less(ctx);
 
     // message in only
     if (!ctx.out) {
@@ -300,7 +300,7 @@ bot.hear(/tea/i, callback);
 Example:
 
 ```javascript
-bot.on('raw', (ctx) => lessLog(ctx) );
+bot.on('raw', (ctx) => terminal.less(ctx) );
 ```
 
 Available:

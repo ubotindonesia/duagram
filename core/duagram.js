@@ -14,6 +14,7 @@ class DuaGram extends DuaEvent {
         super();
         this.Api = ApiTelegram;
         this.init(options);
+        terminal.less = lessLog;
         this.terminal = terminal;
         this.lessLog = lessLog;
     }

@@ -1,6 +1,6 @@
 module.exports = {
     name: 'duaGram',
-    number: '1.1.2',
+    number: '1.1.3',
     desc: 'Telegram Bot Framework',
     repo: 'https://github.com/ubotindonesia/duagram',
     url: 'https://t.me/duagram',

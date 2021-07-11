@@ -1,8 +1,8 @@
-const { lessLog, terminal, duaGram } = require("..");
+const { terminal, duaGram } = require("..");
 const { performance } = require('perf_hooks');
 let options = require('./config');
 
-let LoginAsBotApi = true;
+let LoginAsBotApi = false;
 
 if (LoginAsBotApi) {
     options.as_bot_api = true;
@@ -13,9 +13,9 @@ const bot = new duaGram(options);
 
 const Helper = bot.Helper
 
-/* bot.on('message', async (ctx) => {
-    lessLog(ctx);
-}); */
+bot.on('message', async (ctx) => {
+    terminal.less(ctx);
+});
 
 /* bot.on('raw', async (ctx) => {
     console.log(ctx);

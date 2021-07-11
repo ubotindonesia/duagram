@@ -1,4 +1,4 @@
-const { duaGram, terminal, lessLog } = require("duagram");
+const { duaGram, terminal } = require("duagram");
 
 const bot = new duaGram({
     api_id: 1,
@@ -13,7 +13,7 @@ const bot = new duaGram({
 // event all new message
 bot.on('message', async (ctx) => {
     // simple log
-    lessLog(ctx);
+    terminal.less(ctx);
 });
 
 bot.cmd('ping', async (ctx) => {
@@ -24,7 +24,7 @@ bot.cmd('ping', async (ctx) => {
 });
 
 bot.hear(/^(hi|hel+o+)/i, async (ctx) => {
-    // lessLog(ctx);
+    // terminal.less(ctx);
 
     // message in only
     if (!ctx.out) {
