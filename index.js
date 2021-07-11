@@ -1,6 +1,5 @@
 const AppVersion = require("./version");
-const { DuaGram, terminal, lessLog } = require("./core/duagram");
-const Helper = require('./utils');
+const { DuaGram, terminal, lessLog, Helper } = require("./core/duagram");
 
 class duaGram extends DuaGram {
     constructor(options) {

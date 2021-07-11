@@ -1,5 +1,4 @@
 const { Api } = require("telegram");
-// const { Util } = require("../Utils/util");
 
 function Telegram(client) {
     this.client = client;

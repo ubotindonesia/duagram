@@ -2,13 +2,13 @@
 
 | method                 | desc                                | example                                                            |
 | ---------------------- | ----------------------------------- | ------------------------------------------------------------------ |
-| clearHTML(string)      | cleansing HTML tag                  | clearHTML(‘<’) result: &lt;                                        |
+| clearHTML(string)      | cleansing HTML tag                  | `clearHTML(‘<’) `result: &lt;                                        |
 | clearMarkdown(string)  | cleansing Markdown tag              |                                                                    |
-| isIN(array, index)     | check index in array, true or false | IsIN(\[1,2,3\], 2) result: true                                    |
-| forEach(obj, fn)       | for each object / array             | forEach({one:1, two:2}, (v,i) => { .. })                           |
-| allReplace(text, JSON) | multiple replace text               | allReplace('Hasanudin', {'a':4, 's': 5, 'n|u': 'o'}) //> H454oodio |
-| random(list)           | random array item                   | random(‘one’,’two’,’three’)                                        |
-| random(min, max)       | random number                       | random(0,100)                                                      |
+| isIN(array, index)     | check index in array, true or false | `IsIN(\[1,2,3\], 2)` true                                    |
+| forEach(obj, fn)       | for each object / array             | `forEach({one:1, two:2}, (v,i) => { .. })`                           |
+| allReplace(text, JSON) | multiple replace text               | `allReplace('Hasanudin', {'a':4, 's': 5, 'n|u': 'o'})` H454oodio |
+| random(list)           | random array item                   | `random([‘one’,’two’,’three’])`                                        |
+| random(min, max)       | random number                       | `random(0,100)`                                                      |
 | Button                 | helper button for Bot API           |                                                                    |
 | dateFormat             | any                                 | any                                                                |
 
