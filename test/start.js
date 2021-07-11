@@ -17,33 +17,51 @@ bot.on('message', async (ctx) => {
     terminal.less(ctx);
 });
 
-/* bot.on('raw', async (ctx) => {
+/* bot.on('message', async (ctx) => {
     console.log(ctx);
 }); */
 
-bot.middleware((ctx, next) => {
-    ctx.additional = 'message test from middleware';
-    next();
+bot.middleware(async (ctx, next) => {
+    if (ctx.replyTo) {
+        ctx.detailReplyTo = await bot.getMessages(ctx, ctx.replyTo.replyToMsgId);
+        next();
+    }
 });
 
-bot.cmd('plus', async (ctx) => {
-    if (!ctx.out)
-        return bot.sendMessage(ctx, `Hooked: ${ctx.additional}`);
+bot.cmd('check', async (ctx) => {
+    if (ctx.detailReplyTo) {
+        terminal.debug('Result Detail Message Reply:')
+        terminal.less(ctx.detailReplyTo);
+        return bot.sendMessage(ctx, `Accepted!`);
+    }
 })
+/* 
+bot.cmd('cek', async (ctx) => {
+    if (!ctx.out) {
+        let r = await bot.getMessage(ctx, 378);
+        console.log(r);
+        return bot.sendMessage(ctx, `Accepted.`, { replyToMsgId: ctx.id });
+    }
+}) */
+
+bot.cmd('profile', async (ctx) => {
+    let a = await bot.tg.invoke(new bot.Api.photos.GetUserPhotos({ userId: ctx.fromId.userId }));
+    console.log(a);
+});
+
 
 bot.cmd('upload', async (ctx) => {
     if (!ctx.out) {
         terminal.info('Starting upload...');
         let file = './asset/2gram banner.jpg';
-        let chat_id = bot.peerGetId(ctx);
-        return bot.client.sendFile(chat_id, { file });
+        return bot.sendFile(ctx, file);
     }
 });
 
 bot.cmd('ping', async (ctx) => {
     if (!ctx.out) {
         let t0 = performance.now();
-        let res = await bot.sendMessage(ctx, '**Pong**!', { parse_mode: 'markdown' });
+        let res = await bot.sendMessage(ctx, '**Pong**!', { parse_mode: 'markdown', replyToMsgId: ctx.id });
         let t1 = performance.now();
         let diff = '<code>' + ((t1 - t0) / 1000).toLocaleString('id-ID', { maximumFractionDigits: 3 }) + "</code>"
         return bot.editMessage(ctx, res.id, `Pong!\nIn ${diff} seconds.`, { parse_mode: 'html' });
@@ -72,7 +90,7 @@ bot.cmd('start', async (ctx) => {
 
         // if Bot API, send with Bot API can too
 
-        let chat_id = bot.peerGetId(ctx);
+        let chat_id = bot.getPeerId(ctx);
 
         let reply_markup = JSON.stringify({
             inline_keyboard: [

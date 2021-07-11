@@ -87,9 +87,11 @@ class DuaGram extends DuaEvent {
             let message = ctx.message;
             if (markRead && !as_bot_api)
                 await tg.readHistory(message);
+            
             this.emit('message', message);
 
             if (ctx.media) this.emit('media', ctx);
+            
             if (ctx.message) {
                 // this.scanningText(message);
                 this.processMessage(message);
@@ -115,22 +117,68 @@ class DuaGram extends DuaEvent {
         return await this.telegram.sendMessage(peer, text, more);
     }
 
-    async editMessage(peer, id, text, more) {
+    async editMessage(peer, id, text, more = {}) {
         return await this.telegram.editMessage(peer, id, text, more);
     }
 
     async deleteMessages(peer, ids, revoke = true) {
-        return await this.telegram.deleteMessages(peer, ids, revoke = true)
+        return await this.telegram.deleteMessages(peer, ids, revoke)
     }
 
     async deleteMessage(peer, ids, revoke = true) {
-        return await this.telegram.deleteMessages(peer, ids, revoke = true)
+        return await this.telegram.deleteMessages(peer, ids, revoke)
     }
 
-    peerGetId(ctx) {
-        return this.telegram.peerGetId(ctx);
+    async forwardMessages(peerFrom, peerTo, ids, more = {}) {
+        return await this.telegram.forwardMessages(peerFrom, peerTo, ids, more);
     }
 
+    async getMessages(peer, ids) {
+        return await this.telegram.getMessages(peer, ids);
+    }
+
+    async getMessage(peer, ids) {
+        return await this.telegram.getMessages(peer, ids);
+    }
+
+    async pinMessage(peer, id, more = {}) {
+        return await this.telegram.pinMessage(peer, id, more);
+    }
+
+    async unpinAllMessages(peer) {
+        return await this.telegram.unpinAllMessages(peer);
+    }
+
+    async getUserPhotos(peer, more = {}) {
+        return await this.telegram.getUserPhotos(peer, more);
+    }
+
+    getPeerId(ctx) {
+        return this.telegram.getPeerId(ctx);
+    }
+
+    async invoke(data) {
+        return await this.telegram.invoke(data);
+    }
+
+    async editAdmin(peerChatId, peerUserId, more = {}) {
+        return await this.telegram.editAdmin(peerChatId, peerUserId, more);
+    }
+
+    async editBanned(peerChatId, peerUserId, more = {}) {
+        return await this.telegram.editBanned(peerChatId, peerUserId, more);
+    }
+
+    async getUserInfo(peer) {
+        return await this.telegram.getUserInfo(peer);
+    }
+
+
+    async sendFile(peer, file, more = {}) {
+        return await this.telegram.sendFile(peer, file, more);
+    }
+
+    // end off DuaGram class
 }
 
 module.exports = {

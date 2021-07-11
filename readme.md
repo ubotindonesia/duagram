@@ -111,7 +111,7 @@ bot.cmd('ping', async (ctx) => {
     // message in only
     if (!ctx.out) {
         let t0 = performance.now();
-        let res = await bot.sendMessage(ctx, 'Pong!');
+        let res = await bot.sendMessage(ctx, 'Pong!', { replyToMsgId: ctx.id });
         let t1 = performance.now();
         let diff = '<code>' + ((t1 - t0) / 1000).toLocaleString('id-ID', { maximumFractionDigits: 3 }) + "</code>"
         return await bot.editMessage(ctx, res.id, `Pong!\nIn ${diff} seconds.`, { parse_mode: 'html' });
@@ -130,9 +130,8 @@ bot.hear(/^(hi|hel+o+)/i, async (ctx) => {
 bot.cmd('upload', async (ctx) => {
     if (!ctx.out) {
         terminal.info('Starting upload...');
-        let file = './asset/2gram banner.jpg';
-        let chat_id = bot.peerGetId(ctx);
-        return bot.client.sendFile(chat_id, { file });
+        let file = './photo.jpg';
+        return bot.sendFile(ctx, file);
     }
 });
 
@@ -163,7 +162,7 @@ bot.on('message', async (ctx) => {
 bot.cmd('ping', async (ctx) => {
     // message in only
     if (!ctx.out) {
-        await bot.sendMessage(ctx, '**Pong**!', { parse_mode: 'markdown' });
+        return await bot.sendMessage(ctx, '**Pong**!', { parse_mode: 'markdown', replyToMsgId: ctx.id });
     }
 });
 
@@ -179,9 +178,8 @@ bot.hear(/^(hi|hel+o+)/i, async (ctx) => {
 bot.cmd('upload', async (ctx) => {
     if (!ctx.out) {
         terminal.info('Starting upload...');
-        let file = './asset/2gram banner.jpg';
-        let chat_id = bot.peerGetId(ctx);
-        return bot.client.sendFile(chat_id, { file });
+        let file = './photo.jpg';
+        return bot.sendFile(ctx, file);
     }
 });
 
@@ -195,7 +193,7 @@ bot.cmd('start', async (ctx) => {
 
         // if Bot API, send with Bot API can too
 
-        let chat_id = bot.peerGetId(ctx);
+        let chat_id = bot.getPeerId(ctx);
 
         let reply_markup = JSON.stringify({
             inline_keyboard: [
@@ -243,13 +241,15 @@ Definitions of object peer:
 - entity
 - virtual class of user/channel (object)
 - string (username)
-- number (chat_id)
+- number (userID / peerId)
+- number (Bot API style) like `-1001588206363`
 
 #### Example:
 
 - `sendMessage('me', 'hi');`
 - `sendMessage('username', 'hi');`
 - `sendMessage(213567634, 'hi');`
+- `sendMessage(-1001588206363, 'hi');` // Bot API Style
 - `sendMessage(ctx, 'hi');`
 - `sendMessage(ctx.message, 'hi');` // if `ctx.message` is object, not string
 - `sendMessage(ctx.userId, 'hi');` // if `ctx.userID` is object, not number
@@ -350,24 +350,28 @@ console.log(bot.version);
 #### Alias
 
 - tg (alias `telegram`)
-- sendMessage (alias `tg.sendMessage`)
-- editMessage(`peer, ids, text, more`)
-- deleteMessages(`peer, ids, more`)
-- deleteMessage(`peer, ids, more`) alias
-- invoke (alias `tg.invoke`)
-- peerGetId(ctx)
+- invoke(`params`)
+- sendMessage(`peer, text, more`)
+- ... etc (like **telegram** method)
 
 ## Telegram
 
 ### method
 
 - invoke(`params`)
-- peerGetId(`ctx`)
+- getPeerId(`ctx`)
 - sendMessage(`peer, text, more`)
 - editMessage(`peer, id, text, more`)
 - deleteMessages(`peer, ids, more`)
+- forwardMessages(`peerFrom, peerTo, ids, more`)
+- getMessages(`peer, ids`)
+- pinMessage(`peer, id, more`) 
+- unpinAllMessages(`peer`)
 - readHistory(`peer, more`)
-
+- getUserPhotos(`peer, more`)
+- getUserInfo(`peer`)
+- editAdmin(`peerChatId, peerUserId, more = {}`)
+- editBanned(`peerChatId, peerUserId, more = {}`)
 
 ## Middleware
 
@@ -445,8 +449,14 @@ bot.cmd('plus', async (ctx) => {
 
 ## Last Words
 
-If you are Indonesian, let's join the [@ubotindonesia](https://t.me/ubotindonesia) telegram group.
+### Inspiration
+
+- [Telegraf](https://telegraf.js.org/)
+- [Butthx](https://github.com/butthx) for [tgsnake](https://github.com/butthx/tgsnake/)
+- _for all of you who have tested and used this framework.._ 😄
 
 ### Happy nge-bot!
+
+If you are Indonesian, let's join the [@ubotindonesia](https://t.me/ubotindonesia) telegram group.
 
 _see you again_ ^^
