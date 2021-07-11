@@ -63,36 +63,41 @@ bot.cmd('version', (ctx) => {
 });
 
 bot.cmd('start', async (ctx) => {
-    // reply just message in
+    // message in only
     if (!ctx.out) {
-        // if Bot API, send with Bot API can too
-        if (bot.asBotApi) {
-            let chat_id = bot.peerGetId(ctx);
 
-            let reply_markup = JSON.stringify({
-                inline_keyboard: [
-                    [
-                        Helper.Button.url('👥 uBotIndonesia', 'https://t.me/ubotindonesia')
-                    ], [
-                        Helper.Button.text('One', 'cb1'),
-                        Helper.Button.text('Two', 'cb2')
-                    ]
-                ]
-            });
-
-            let more = {
-                parse_mode: 'html',
-                reply_markup
-            }
-
-            await bot.BotApi.sendMessage(chat_id, 'This message from <b>Bot Api</b>', more)
-                .then(result => {
-                    terminal.log('Result: BotApi sendMessage')
-                    console.log(result);
-                })
-                .catch(error => terminal.error(error.message));
-
+        if (!bot.asBotApi) {
+            return bot.sendMessage(ctx, "I'm not bot api 😅")
         }
+
+        // if Bot API, send with Bot API can too
+
+        let chat_id = bot.peerGetId(ctx);
+
+        let reply_markup = JSON.stringify({
+            inline_keyboard: [
+                [
+                    Helper.Button.url('👥 uBotIndonesia', 'https://t.me/ubotindonesia')
+                ], [
+                    Helper.Button.text('One', 'cb1'),
+                    Helper.Button.text('Two', 'cb2')
+                ]
+            ]
+        });
+
+        let more = {
+            parse_mode: 'html',
+            reply_markup
+        }
+
+        await bot.BotApi.sendMessage(chat_id, 'This message from <b>Bot Api</b>', more)
+            .then(result => {
+                terminal.log('Result: BotApi sendMessage')
+                console.log(result);
+            })
+            .catch(error => terminal.error(error.message));
+
+
     }
 });
 

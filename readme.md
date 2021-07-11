@@ -189,7 +189,9 @@ bot.cmd('start', async (ctx) => {
     // message in only
     if (!ctx.out) {
 
-        if (!bot.asBotApi) return false;
+        if (!bot.asBotApi) {
+            return bot.sendMessage(ctx, "I'm not bot api 😅")
+        }
 
         // if Bot API, send with Bot API can too
 
@@ -274,6 +276,14 @@ Definitions of object peer:
 
 ### Event
 
+Available :
+
+- **on**(`updateType, stop=true`)
+- **cmd**(`string, callback, stop=true`)
+- **hear**(`regex|string, callback, stop=true`)
+- hears(`regex|string, callback, stop=true`) alias hear
+- **command** alias `cmd`
+
 Example:
 
 ```javascript
@@ -284,13 +294,6 @@ bot.hear(/^!time$/i, callback);
 bot.hear(/coffee/i, callback, false); // if found stopable? false. So, catch condition anatoher again bellow
 bot.hear(/tea/i, callback);
 ```
-
-Available now:
-
-- **cmd**(`string, callback, stop=true`)
-- **hear**(`regex|string, callback, stop=true`)
-- hears(`regex|string, callback, stop=true`) alias hear
-- **command** alias `cmd`
 
 ### Update Type
 

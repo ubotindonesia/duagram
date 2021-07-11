@@ -73,7 +73,7 @@ class DuaGram extends DuaEvent {
             as_bot_api_info = 'userbot';
 
             terminal.log("This session:");
-            console.log(loggedSession);
+            console.log(client.session.save());
         }
         terminal.warn(`You login as [${as_bot_api_info}]`)
         let tg = new Telegram(client);

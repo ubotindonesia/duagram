@@ -45,7 +45,9 @@ bot.cmd('start', async (ctx) => {
     // message in only
     if (!ctx.out) {
 
-        if (!bot.asBotApi) return false;
+        if (!bot.asBotApi) {
+            return bot.sendMessage(ctx, "I'm not bot api 😅")
+        }
 
         // if Bot API, send with Bot API can too
 
