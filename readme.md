@@ -386,6 +386,10 @@ bot.cmd('plus', async (ctx) => {
 })
 ```
 
+### Middleware List
+
+- [duaGram rate-limit](https://www.npmjs.com/package/duagram-ratelimit)
+
 
 ## client
 
