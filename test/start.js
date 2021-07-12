@@ -13,7 +13,7 @@ const bot = new duaGram(options);
 
 const Helper = bot.Helper
 
-bot.on('message', async (ctx) => {
+bot.on('message', async (ctx, ori) => {
     terminal.less(ctx);
 });
 
@@ -22,27 +22,21 @@ bot.on('message', async (ctx) => {
 }); */
 
 bot.middleware(async (ctx, next) => {
-    if (ctx.replyTo) {
-        ctx.detailReplyTo = await bot.getMessages(ctx, ctx.replyTo.replyToMsgId);
-        next();
-    }
+    // ctx.message: `Hooked: ${text}`
+    ctx.hook = {
+        session: 'any something'
+    };
+    next();
 });
 
+bot.on('media', () => terminal.warn('Media!'));
+
 bot.cmd('check', async (ctx) => {
-    if (ctx.detailReplyTo) {
-        terminal.debug('Result Detail Message Reply:')
-        terminal.less(ctx.detailReplyTo);
-        return bot.sendMessage(ctx, `Accepted!`);
-    }
+    terminal.debug('Hooked Message:')
+    terminal.less(ctx);
+    return bot.sendMessage(ctx, `Accepted.\n\n${ctx.hook.session}`, { replyToMsgId: ctx.id, parse_mode: 'markdown' });
+
 })
-/* 
-bot.cmd('cek', async (ctx) => {
-    if (!ctx.out) {
-        let r = await bot.getMessage(ctx, 378);
-        console.log(r);
-        return bot.sendMessage(ctx, `Accepted.`, { replyToMsgId: ctx.id });
-    }
-}) */
 
 bot.cmd('profile', async (ctx) => {
     let a = await bot.tg.invoke(new bot.Api.photos.GetUserPhotos({ userId: ctx.fromId.userId }));

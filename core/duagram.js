@@ -4,7 +4,7 @@ const { StringSession } = require("telegram/sessions");
 const { NewMessage } = require('telegram/events');
 const { Logger } = require("telegram/extensions");
 const input = require("input");
-const { terminal, fileLog, lessLog } = require('../utils/log');
+const { terminal, lessLog } = require('../utils/log');
 const { Api: ApiTelegram, Telegram } = require('./telegram');
 const botApi = require('./botapi');
 const Helper = require('../utils');
@@ -85,18 +85,8 @@ class DuaGram extends DuaEvent {
         // newMessage
         client.addEventHandler(async (ctx) => {
             let message = ctx.message;
-            if (markRead && !as_bot_api)
-                await tg.readHistory(message);
-            
-            this.emit('message', message);
-
-            if (ctx.media) this.emit('media', ctx);
-            
-            if (ctx.message) {
-                // this.scanningText(message);
-                this.processMessage(message);
-            }
-
+            if (markRead && !as_bot_api) tg.readHistory(message);
+            this.processMessage(ctx);
         }, new NewMessage({}));
 
         // raw
@@ -171,6 +161,10 @@ class DuaGram extends DuaEvent {
 
     async getUserInfo(peer) {
         return await this.telegram.getUserInfo(peer);
+    }
+
+    async joinGroup(peer) {
+        return await this.telegram.joinGroup(peer);
     }
 
 

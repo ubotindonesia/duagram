@@ -26,9 +26,7 @@ Use at Your Own Risk.
 - [Issues](https://github.com/ubotindonesia/duagram/issues)
 - Contributor are welcome...
 
-## Start
-
-### Install
+## Install
 
 `npm i duagram`
 
@@ -76,7 +74,7 @@ BotFather will give you a token, something like `123456789:AbCdfGhIJKlmNoQQRsTUV
 
 ## More Example
 
-> Do you need more example? Check this ...
+> Do you need more example? Check this ... [examples page](https://github.com/ubotindonesia/duagram/tree/main/examples).
 
 ### User Login
 
@@ -319,6 +317,8 @@ Class name event example:
 - UpdateUserTyping
 - etc... [schema](https://core.telegram.org/schema)
 
+Result `object` **raw** without middleware effect.
+
 ### Properties
 
 Method or Accessors of duaGram.
@@ -372,6 +372,7 @@ console.log(bot.version);
 - getUserInfo(`peer`)
 - editAdmin(`peerChatId, peerUserId, more = {}`)
 - editBanned(`peerChatId, peerUserId, more = {}`)
+- joinGroup(`peer`)
 
 ## Middleware
 
@@ -448,12 +449,6 @@ bot.cmd('plus', async (ctx) => {
 - [VS Codium](https://vscodium.com/)
 
 ## Last Words
-
-### Inspiration
-
-- [Telegraf](https://telegraf.js.org/)
-- [Butthx](https://github.com/butthx) for [tgsnake](https://github.com/butthx/tgsnake/)
-- _for all of you who have tested and used this framework.._ 😄
 
 ### Happy nge-bot!
 

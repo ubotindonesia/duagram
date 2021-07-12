@@ -210,9 +210,11 @@ Telegram.prototype = {
     },
 
     async getUserInfo(peer) {
-        return await this.invoke(new Api.help.GetUserInfo({
-            userId: this.getPeerId(peer)
-        }));
+        return await this.invoke(new Api.help.GetUserInfo({ userId: this.getPeerId(peer) }));
+    },
+
+    async joinGroup(peer) {
+        return await this.invoke(new Api.channels.JoinChannel({ channel: this.getPeerId(peer), }))
     },
 
 

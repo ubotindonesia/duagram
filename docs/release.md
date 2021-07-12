@@ -6,6 +6,7 @@
 
 - rename `peerGetID` to `getPeerID`;
 - `getPeerId` bot API style accept too (`-100xxxx`)
+- `middleware` fix to `message` event
 - `telegram` class add more methode
     - getMessages
     - pinMessage
@@ -15,6 +16,7 @@
     - editAdmin
     - editBanned
     - sendFile
+    - joinGroup
 - fix bugs: `more` options to all method
 - add package `request` dependendcy
 - `lessLog` changeto `terminal.less`

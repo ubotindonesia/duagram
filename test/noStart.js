@@ -4,6 +4,12 @@ let result = {};
 
 const bot = new duaGram(options);
 
+bot.middleware(async (ctx, next) => {
+    ctx.hooked = 'this is new message';
+    next();
+
+});
+
 bot.hear(/ping/i, (ctx) => lessLog(ctx));
 bot.cmd('ping', (ctx) => lessLog(ctx));
 
@@ -12,6 +18,7 @@ bot.hear('hi', (ctx) => {
 })
 
 result.scanners = bot.scanners;
+result.middleware = bot.middleware;
 result.version = bot.version;
 
 

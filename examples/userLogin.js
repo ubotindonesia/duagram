@@ -14,6 +14,7 @@ const bot = new duaGram({
 // event all new message
 bot.on('message', async (ctx) => {
     // simple log
+    terminal.info('new message');
     terminal.less(ctx);
 });
 
@@ -27,18 +28,10 @@ bot.cmd('ping', async (ctx) => {
     }
 });
 
-bot.hear(/^(hi|hel+o+)/i, async (ctx) => {
-    // terminal.less(ctx);
-
+bot.hear(/^(h+i+|h+e+l+o+)/i, async (ctx) => {
     // message in only
     if (!ctx.out) {
         await bot.sendMessage(ctx, '<i>Hi, too!</i>', { parse_mode: 'html' });
-    }
-});
-
-bot.cmd('version', (ctx) => {
-    if (!ctx.out) {
-        return bot.sendMessage(ctx, `<code>${JSON.stringify(bot.version, null, 2)}<code>`, { parse_mode: 'HTML' });
     }
 });
 
@@ -47,6 +40,12 @@ bot.cmd('upload', async (ctx) => {
         terminal.info('Starting upload...');
         let file = './photo.jpg';
         return bot.sendFile(ctx, file);
+    }
+});
+
+bot.cmd('version', (ctx) => {
+    if (!ctx.out) {
+        return bot.sendMessage(ctx, `<code>${JSON.stringify(bot.version, null, 2)}<code>`, { parse_mode: 'HTML' });
     }
 });
 

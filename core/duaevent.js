@@ -54,13 +54,19 @@ class DuaEvent extends EventEmitter {
     }
 
     processMessage(ctx) {
+        let _ctx = ctx;
+        ctx = _ctx.message;
+
         if (this.middlewares.length === 0) {
+            this.emit('message', _ctx);
             return this.scanningText(ctx);
         }
 
         const nextFunction = (ctx, index = 1) => {
             return () => {
                 if (!this.middlewares[index]) {
+                    _ctx.message = ctx;
+                    this.emit('message', _ctx);
                     return this.scanningText(ctx);
                 }
 
@@ -71,14 +77,12 @@ class DuaEvent extends EventEmitter {
     }
 
     scanningText(ctx) {
+        if (ctx.media) this.emit('media', ctx);
         let text = ctx.message;
         let found = false; let matchPattern = [];
         let walk = true;
 
-        if (this.scanners.length <= 0) {
-            terminal.debug('Scanners empty');
-            return false;
-        }
+        if (this.scanners.length <= 0) return false;
 
         this.scanners.forEach((scanner) => {
             let { key, callback, stop } = scanner;
