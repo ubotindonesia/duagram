@@ -80,7 +80,6 @@ BotFather will give you a token, something like `123456789:AbCdfGhIJKlmNoQQRsTUV
 
 ```javascript
 const { duaGram, terminal } = require("duagram");
-const { performance } = require('perf_hooks');
 
 const bot = new duaGram({
     api_id: 1,
@@ -106,14 +105,7 @@ bot.on('message', async (ctx) => {
 });
 
 bot.cmd('ping', async (ctx) => {
-    // message in only
-    if (!ctx.out) {
-        let t0 = performance.now();
-        let res = await bot.sendMessage(ctx, 'Pong!', { replyToMsgId: ctx.id });
-        let t1 = performance.now();
-        let diff = '<code>' + ((t1 - t0) / 1000).toLocaleString('id-ID', { maximumFractionDigits: 3 }) + "</code>"
-        return await bot.editMessage(ctx, res.id, `Pong!\nIn ${diff} seconds.`, { parse_mode: 'html' });
-    }
+    bot.sendMessage(ctx, 'Pong!', { replyToMsgId: ctx.id });
 });
 
 bot.hear(/^(hi|hel+o+)/i, async (ctx) => {
