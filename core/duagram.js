@@ -116,12 +116,11 @@ class DuaGram extends DuaEvent {
             long: aboutMe,
             short: { id, self, bot, first_name, last_name, username }
         }
-        //console.log(aboutMe);
     }
 
     get aboutMe() {
         let { first_name, last_name, username, phone } = this.me.long;
-        let me = '[name: ' + first_name;
+        let me = 'About me [name: ' + first_name;
         if (last_name) me += ' ' + last_name;
         me += ']'
         if (username) me += '[username: @' + username + '] ';

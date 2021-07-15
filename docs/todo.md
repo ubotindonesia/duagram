@@ -2,7 +2,7 @@
 
 milestone
 
-- chat.properties
+- chat.properties (low)
 - Edit event: `UpdateEditChannelMessage` ...
 - ctx method: `ctx.reply`, ctx...
 - download file

@@ -1,5 +1,6 @@
 const EventEmitter = require('events');
 const { terminal } = require('../utils/log');
+// const Context = require('./context');
 const DuaMessage = require('./duamessage');
 
 const removeNull = (obj) => {
@@ -122,7 +123,6 @@ class DuaEvent extends EventEmitter {
     }
 
     processMiddleware(update, _ctx) {
-
         let _update = update;
 
         // replace from:me with me data
@@ -132,6 +132,8 @@ class DuaEvent extends EventEmitter {
         injectMe = JSON.parse(injectMe);
         update = removeNull(injectMe);
         
+        /* let context = new Context(update, this.client).command;
+        Object.assign(update, context); */
 
         // middleware process
         if (this.middlewares.length === 0) {
