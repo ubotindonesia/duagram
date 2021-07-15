@@ -1,6 +1,6 @@
 {
   "name": "duagram",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Telegram Framework for userbot or bot api",
   "main": "index.js",
   "homepage": "https://t.me/duagram",
@@ -26,12 +26,13 @@
     "input": "^1.0.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
-    "telegram": "1.7.5"
+    "telegram": "^1.7.15"
   },
   "engines": {
     "node": ">=14.x"
   },
   "devDependencies": {
-    "json-stringify-safe": "^5.0.1"
+    "json-stringify-safe": "^5.0.1",
+    "log4js": "^6.3.0"
   }
 }

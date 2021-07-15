@@ -1,6 +1,18 @@
 ## Release Version
+### v1.2.2
 
-### v1.1.2
+- new `ctx.reply(text, more)` and  `ctx.replyWithHTML(text, more)`
+- fix middleware (update, _ctx);
+- upgrade telegram (gramjs) client v`1.7.15`
+
+
+### v1.2.1
+
+- fix getPeerId for new json format (ctx.chat.id)
+
+### v1.2.0
+
+`2021-07-15`
 
 - getMe(`peer`)
 - Helper: `cleanObject()`

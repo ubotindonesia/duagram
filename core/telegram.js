@@ -1,4 +1,5 @@
 const { Api } = require("telegram");
+const { _parseMessageText } = require("telegram/client/messageParse")
 const getPeerId = require('../utils/peer');
 
 function Telegram(client) {
@@ -22,7 +23,7 @@ Telegram.prototype = {
         if (more.parse_mode) {
             let parse_mode = more.parse_mode.toLowerCase();
 
-            [parseText, entities] = await this.client._parseMessageText(text, parse_mode);
+            let [parseText, entities] = await _parseMessageText(this.client, text, parse_mode);
             params.message = parseText;
             params.entities = entities;
             delete more.parse_mode;
@@ -36,7 +37,7 @@ Telegram.prototype = {
         if (more.parse_mode) {
             let parse_mode = more.parse_mode.toLowerCase();
 
-            [parseText, entities] = await this.client._parseMessageText(text, parse_mode);
+            [parseText, entities] = await _parseMessageText(this.client, text, parse_mode);
             params.message = parseText;
             params.entities = entities;
             delete more.parse_mode;
@@ -67,7 +68,6 @@ Telegram.prototype = {
                 ...more
             })
         )
-
     },
 
     async getMessages(peer, ids) {

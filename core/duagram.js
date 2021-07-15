@@ -1,15 +1,16 @@
-const DuaEvent = require('./duaevent');
 const { TelegramClient } = require("telegram");
 const { StringSession } = require("telegram/sessions");
 const { NewMessage } = require('telegram/events');
 const { Logger } = require("telegram/extensions");
+const DuaCommand = require("./duacommand");
 const input = require("input");
 const { terminal, lessLog, moreLog } = require('../utils/log');
 const { Api: ApiTelegram, Telegram } = require('./telegram');
 const botApi = require('./botapi');
 const Helper = require('../utils');
 
-class DuaGram extends DuaEvent {
+
+class DuaGram extends DuaCommand {
     constructor(options) {
         super();
         this.Api = ApiTelegram;

@@ -1,6 +1,5 @@
 const EventEmitter = require('events');
 const { terminal } = require('../utils/log');
-// const Context = require('./context');
 const DuaMessage = require('./duamessage');
 
 const removeNull = (obj) => {
@@ -19,7 +18,6 @@ class DuaEvent extends EventEmitter {
         this.asBotApi;
         this.cmdPrefix = "!./";
         this.BotApi = false;
-        this.telegram = false;
         this.client = false;
         this.scanners = [];
         this.middlewares = []
@@ -72,15 +70,15 @@ class DuaEvent extends EventEmitter {
         const _ctx = ctx;
         ctx = ctx.message;
         let more = {};
-    
+
         /* let eventKey = [];
         for (key in _ctx) {
             eventKey.push(key);
         } */
-        
+
         let from = ctx.fromId ? this.fieldType(ctx.fromId) : false;
         let peer = ctx.peerId ? this.fieldType(ctx.peerId) : false;
-    
+
         let forward_from = false;
         if (ctx.fwdFrom) {
             let type = false;
@@ -97,22 +95,22 @@ class DuaEvent extends EventEmitter {
                 name: fromName,
             }
         }
-    
+
         let ids = [ctx.id];
-    
+
         if (ctx.replyTo) {
             let id = ctx.replyTo.replyToMsgId;
             ids.push(id);
             more.reply = id;
         };
-    
-    
+
+
         let update = await this.getMessages(peer.id, ids);
 
         more = { peer, from, forward: forward_from, ...more };
         let context = new DuaMessage(update, more).context;
 
-        let result =  {
+        let result = {
             peer,
             from,
             forward_from,
@@ -131,9 +129,17 @@ class DuaEvent extends EventEmitter {
         let injectMe = str.replace(/"from":"me"/g, `"from": ${me}`);
         injectMe = JSON.parse(injectMe);
         update = removeNull(injectMe);
-        
-        /* let context = new Context(update, this.client).command;
-        Object.assign(update, context); */
+
+        // let command = this.buildOn(update);
+        let command = {};
+        command.reply = async (text, more = {}) => {
+            return await this.sendMessage(update.chat.id, text, more);
+        };
+        command.replyWithHTML = async (text, more = {}) => {
+            return await this.sendMessage(update.chat.id, text, { parse_mode: 'html', ...more });
+        };
+
+        Object.assign(update, command);
 
         // middleware process
         if (this.middlewares.length === 0) {
@@ -157,7 +163,7 @@ class DuaEvent extends EventEmitter {
     scanningText(update, _ctx) {
         // if (update.media) this.emit('media', update, _ctx);
 
-        if (update.event.length>0) update.event.forEach(type => this.emit(type, update, _ctx));
+        if (update.event.length > 0) update.event.forEach(type => this.emit(type, update, _ctx));
 
         if (!update.text) return;
         let text = update.text;
@@ -176,13 +182,13 @@ class DuaEvent extends EventEmitter {
                     found = true; walk = stop;
                     matchPattern.push(key);
                     update.match = match;
-                    return callback(update);
+                    return callback(update, _ctx);
                 }
             }
             if (key == text) {
                 found = true; walk = stop;
                 matchPattern.push(key);
-                return callback(update);
+                return callback(update, _ctx);
             }
 
         });

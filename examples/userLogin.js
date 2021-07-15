@@ -29,15 +29,14 @@ bot.hear(/^(h+i+|h+e+l+o+)/i, (ctx) => {
     bot.sendMessage(ctx, '<i>Hi, too!</i>', { parse_mode: 'html' });
 });
 
-bot.cmd('upload', async (ctx) => {
+bot.cmd('upload', (ctx) => {
     terminal.info('Starting upload...');
     let file = './photo.jpg';
     return bot.sendFile(ctx, file);
-
 });
 
 bot.cmd('version', (ctx) => {
-    return bot.sendMessage(ctx, `<code>${JSON.stringify(bot.version, null, 2)}<code>`, { parse_mode: 'HTML' });
+    return bot.sendMessage(ctx, `<code>${JSON.stringify(bot.version, null, 2)}</code>`, { parse_mode: 'html' });
 });
 
 bot.start();

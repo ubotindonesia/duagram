@@ -49,7 +49,8 @@ const bot = new duaGram({
 });
 
 bot.cmd('ping', (ctx) => {
-    bot.sendMessage(ctx.chat.id, '**Pong**!', { parse_mode: 'markdown' });
+    // bot.sendMessage(ctx, 'pong');
+    return ctx.reply('pong!');    
 });
 
 bot.start();
@@ -135,18 +136,18 @@ bot.on('message', async (ctx) => {
     console.log(ctx);
 });
 
-bot.cmd('ping', async (ctx) => {
-    bot.sendMessage(ctx.chat.id, 'Pong!', { replyToMsgId: ctx.id });
+bot.cmd('ping', (ctx) => {
+    return ctx.reply('Pong!', { replyToMsgId: ctx.id });
 });
 
 bot.cmd('upload', async (ctx) => {
     terminal.info('Starting upload...');
     let file = './photo.jpg';
-    return bot.sendFile(ctx.chat.id, file);
+    return await bot.sendFile(ctx.chat.id, file);
 
 });
 
-bot.cmd('start', async (ctx) => {
+bot.cmd('start', (ctx) => {
     // message in only
     if (ctx.out) return false;
 

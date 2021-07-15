@@ -66,8 +66,9 @@ bot.cmd('start', async (ctx) => {
 
 });
 
-bot.cmd('version', (ctx) => {
-    return bot.sendMessage(ctx, `<code>${JSON.stringify(bot.version, null, 2)}<code>`, { parse_mode: 'HTML' });
+bot.cmd('version', (ctx, _ctx) => {
+    let telegram = 'Telegram Client: v' + _ctx._client.__version__;
+    return bot.sendMessage(ctx, `${telegram}\n\n<code>${JSON.stringify(bot.version, null, 2)}</code>`, { parse_mode: 'HTML' });
 });
 
 
