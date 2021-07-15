@@ -107,12 +107,13 @@ class DuaGram extends DuaEvent {
 
     storeMe(data) {
         let aboutMe = new this.DuaMessage({}, { me: data }).getMe;
-        let { id, bot, first_name, last_name, username } = aboutMe;
+        let { id, bot, self, first_name, last_name, username } = aboutMe;
         this.me = {
             handle: data,
             long: aboutMe,
-            short: { id, bot, first_name, last_name, username }
+            short: { id, self, bot, first_name, last_name, username }
         }
+        console.log(aboutMe);
     }
 
     async getMe(peer = false) {

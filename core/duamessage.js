@@ -56,7 +56,7 @@ class DuaMessage {
     }
 
     entitiesMessage(entities) {
-        //console.log(entities);
+        this.broadcastStore('entities');
         let result = [];
         let typeEntity = (value) => value.className.replace('MessageEntity', '').toLowerCase()
             .replace(/texturl/i, 'text_link')
@@ -192,32 +192,29 @@ class DuaMessage {
 
     }
 
-    /* get mediaMessage() {
-        let mm = this.media;
-        if (!mm) return {};
+    mediaStore(data) {
+        this.broadcastStore('media');
 
-
-        let type = mm.className.replace('MessageMedia', '').toLowerCase();
+        let type = data.className.replace('MessageMedia', '').toLowerCase();
         this.broadcastStore(type);
 
-        let mime = mm[type].mimeType;
+        let mime = data[type].mimeType;
 
         let bc = typeof mime == "string" ? mime.split('/') : false;
-        if (bc) this.broadcastStore(...bc);
+        // if (bc) this.broadcastStore(...bc);
 
-        if (/sticker/i.exec(mm[type].mimeType)) this.pushBroadcast('sticker');
+        if (/sticker/i.exec(data[type].mimeType)) this.broadcastStore('sticker');
 
         return {
-            media: {
-                id: mm[type].id.value,
-                type,
-                date: mm[type].date,
-                size: mm[type].size,
-                mime_type: mime,
-                dc: mm[type].dcId
-            }
+            //id: data[type].id.value,
+            type,
+            date: data[type].date,
+            size: data[type].size,
+            mime_type: mime,
+            dc: data[type].dcId,
+            data: 'check on _ctx'
         }
-    }*/
+    }
 
     get mainMessage() {
         let message = this.update.messages[0];
@@ -229,9 +226,7 @@ class DuaMessage {
         this.store();
 
         let broadcast = [];
-        let messages = this.update.messages;
-
-        Object.entries(this.Store.broadcast).forEach(([key, value]) => broadcast.push(key));
+        let messages = this.update.messages;        
 
         // main messsage data
         let main = this.mainMessage;
@@ -273,17 +268,24 @@ class DuaMessage {
             }
         }
 
+        // media data
+        let media = false;
+        if (messages[0].media) {
+            media = this.mediaStore(messages[0].media);
+        }
+
 
         let result = {
             ...main,
             ...forward_from,
             reply_to_message,
+            media,
             from,
             chat
         }
 
-
         result = removeNull(result);
+        Object.entries(this.Store.broadcast).forEach(([key, value]) => broadcast.push(key));
 
         return {
             ...result,

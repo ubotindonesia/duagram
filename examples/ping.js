@@ -20,3 +20,5 @@ bot.cmd('ping', async (ctx) => {
     return bot.editMessage(ctx.chat.id, result.id, `Pong!\nIn <code>${diff}</code> seconds.`, { parse_mode: 'html' })
         .catch(e => terminal.error(e.message));
 });
+
+bot.start();

@@ -49,7 +49,7 @@ const bot = new duaGram({
 });
 
 bot.cmd('ping', (ctx) => {
-    bot.sendMessage(ctx, '**Pong**!', { parse_mode: 'markdown' });
+    bot.sendMessage(ctx.chat.id, '**Pong**!', { parse_mode: 'markdown' });
 });
 
 bot.start();
@@ -95,11 +95,7 @@ const bot = new duaGram({
     markRead: true 
 });
 
-// event all new message
 bot.on('message', async (ctx, _ctx) => {
-    terminal.debug('Ctx Legacy');
-    console.log(_ctx);
-
     terminal.debug('Ctx Duagram');
     terminal.more(ctx);
 });
@@ -134,10 +130,7 @@ const bot = new duaGram({
 });
 
 // event all new message
-bot.on('message', async (ctx, _ctx) => {
-    terminal.debug('Ctx Legacy');
-    console.log(_ctx);
-
+bot.on('message', async (ctx) => {
     terminal.debug('Ctx Duagram');
     terminal.more(ctx);
 });
