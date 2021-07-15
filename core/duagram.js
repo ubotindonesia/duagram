@@ -76,12 +76,15 @@ class DuaGram extends DuaEvent {
             terminal.log("This session:");
             console.log(client.session.save());
         }
-        terminal.warn(`You login as [${as_bot_api_info}]`)
+
         let tg = new Telegram(client);
         this.telegram = tg;
 
         let aboutMe = await this.getMe();
         this.storeMe(aboutMe);
+
+        terminal.warn(`You login as [${as_bot_api_info}]`);
+        terminal.info(this.aboutMe);
 
         terminal.info("I'm ready here, waiting for your activity...");
 
@@ -113,7 +116,17 @@ class DuaGram extends DuaEvent {
             long: aboutMe,
             short: { id, self, bot, first_name, last_name, username }
         }
-        console.log(aboutMe);
+        //console.log(aboutMe);
+    }
+
+    get aboutMe() {
+        let { first_name, last_name, username, phone } = this.me.long;
+        let me = '[name: ' + first_name;
+        if (last_name) me += ' ' + last_name;
+        me += ']'
+        if (username) me += '[username: @' + username + '] ';
+        if (phone) me += '[phone: +' + phone + '] ';
+        return me;
     }
 
     async getMe(peer = false) {
