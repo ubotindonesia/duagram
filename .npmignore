@@ -2,8 +2,9 @@
 .test
 .env*
 .data
+asset
+bak
+debug
 docs
 ref
-bak
 node_modules
-asset

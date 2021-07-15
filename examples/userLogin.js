@@ -1,5 +1,4 @@
 const { duaGram, terminal } = require("duagram");
-const { performance } = require('perf_hooks');
 
 const bot = new duaGram({
     api_id: 1,
@@ -12,35 +11,33 @@ const bot = new duaGram({
 });
 
 // event all new message
-bot.on('message', async (ctx) => {
-    // simple log
-    terminal.info('new message');
-    terminal.less(ctx);
+bot.on('message', async (ctx, _ctx) => {
+    terminal.debug('Ctx Legacy');
+    console.log(_ctx);
+
+    terminal.debug('Ctx Duagram');
+    terminal.more(ctx);
 });
 
 bot.cmd('ping', async (ctx) => {
-    bot.sendMessage(ctx, 'Pong!', { replyToMsgId: ctx.id });
+    bot.sendMessage(ctx.chat.id, 'Pong!', { replyToMsgId: ctx.id });
 });
 
-bot.hear(/^(h+i+|h+e+l+o+)/i, async (ctx) => {
+bot.hear(/^(h+i+|h+e+l+o+)/i, (ctx) => {
     // message in only
-    if (!ctx.out) {
-        await bot.sendMessage(ctx, '<i>Hi, too!</i>', { parse_mode: 'html' });
-    }
+    if (ctx.out) return;
+    bot.sendMessage(ctx.chat.id, '<i>Hi, too!</i>', { parse_mode: 'html' });
 });
 
 bot.cmd('upload', async (ctx) => {
-    if (!ctx.out) {
-        terminal.info('Starting upload...');
-        let file = './photo.jpg';
-        return bot.sendFile(ctx, file);
-    }
+    terminal.info('Starting upload...');
+    let file = './photo.jpg';
+    return bot.sendFile(ctx.chat.id, file);
+
 });
 
 bot.cmd('version', (ctx) => {
-    if (!ctx.out) {
-        return bot.sendMessage(ctx, `<code>${JSON.stringify(bot.version, null, 2)}<code>`, { parse_mode: 'HTML' });
-    }
+    return bot.sendMessage(ctx.chat.id, `<code>${JSON.stringify(bot.version, null, 2)}<code>`, { parse_mode: 'HTML' });
 });
 
 bot.start();

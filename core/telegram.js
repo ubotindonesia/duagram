@@ -1,53 +1,15 @@
 const { Api } = require("telegram");
+const getPeerId = require('../utils/peer');
 
 function Telegram(client) {
     this.client = client;
+    this.getPeerId = getPeerId;
 }
 
 Telegram.prototype = {
 
     async invoke(data) {
         return await this.client.invoke(data);
-    },
-
-    getPeerId(ctx) {
-        if (typeof ctx == 'number') {
-            if (ctx < 0) {
-                return parseInt(String(ctx).replace('-100', ''));
-            }
-            return ctx;
-        }
-
-        if (typeof ctx == 'string') return ctx;
-
-        if (typeof ctx.message?.message?.peerId?.userId == 'number')
-            return ctx.message?.peerId?.userId;
-
-        if (typeof ctx.message?.peerId?.userId == 'number')
-            return ctx.message?.peerId?.userId;
-
-        if (typeof ctx.peerId?.userId == 'number')
-            return ctx.peerId?.userId;
-
-        if (typeof ctx.message?.message?.peerId?.channelId == 'number')
-            return ctx.message?.peerId?.channelId;
-
-        if (typeof ctx.message?.peerId?.channelId == 'number')
-            return ctx.message?.peerId?.channelId;
-
-        if (typeof ctx.peerId?.channelId == 'number')
-            return ctx.peerId?.channelId;
-
-        // letakkan akhir
-        if (ctx.userId)
-            if (typeof ctx.userId == 'number')
-                return ctx.userId;
-
-        if (ctx.channelId)
-            if (typeof ctx.channelId == 'number')
-                return ctx.channelId;
-
-        return ctx;
     },
 
     async sendMessage(peer, text, more = {}) {

@@ -1,6 +1,15 @@
 ## Release Version
 
-### v1.2.0
+### v1.1.2
+
+- getMe(`peer`)
+- Helper: `cleanObject()`
+- `terminal.more()` unstopable json view data
+- option:`floodSleepThreshold` default set to `180` seconds
+- **rewrite ctx message format**, check examples
+
+
+### v1.1.5
 
 `2021-07-12`
 

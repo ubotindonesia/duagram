@@ -1,12 +1,13 @@
 {
   "name": "duagram",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "description": "Telegram Framework for userbot or bot api",
   "main": "index.js",
   "homepage": "https://t.me/duagram",
   "bugs": "https://github.com/ubotindonesia/duagram/issues",
   "repository": "https://github.com/ubotindonesia/duagram",
   "scripts": {
+    "start": "reset && node debug/dmessage.js",
     "test": "node test/start.js"
   },
   "keywords": [

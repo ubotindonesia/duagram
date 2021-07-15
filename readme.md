@@ -48,11 +48,8 @@ const bot = new duaGram({
     api_hash: 'your-api-hash'
 });
 
-bot.cmd('ping', async (ctx) => {
-    // message in only
-    if (!ctx.out) {
-        bot.sendMessage(ctx, '**Pong**!', { parse_mode: 'markdown' });
-    }
+bot.cmd('ping', (ctx) => {
+    bot.sendMessage(ctx, '**Pong**!', { parse_mode: 'markdown' });
 });
 
 bot.start();
@@ -74,7 +71,7 @@ BotFather will give you a token, something like `123456789:AbCdfGhIJKlmNoQQRsTUV
 
 ## More Example
 
-> Do you need more example? Check this ... [examples page](https://github.com/ubotindonesia/duagram/tree/main/examples).
+> Do you need more example? [Check this page](https://github.com/ubotindonesia/duagram/tree/main/examples).
 
 ### User Login
 
@@ -92,37 +89,30 @@ const bot = new duaGram({
     session: '', 
 
     // The most common error is the FloodWait error which is caused by calling a method multiple times in a short period and acts as a spam filter from telegram. So:
-    floodSleepThreshold: 60, 
+    floodSleepThreshold: 180, 
 
     // Mark message history as read
     markRead: true 
 });
 
 // event all new message
-bot.on('message', async (ctx) => {
-    // simple log
-    terminal.less(ctx);
+bot.on('message', async (ctx, _ctx) => {
+    terminal.debug('Ctx Legacy');
+    console.log(_ctx);
+
+    terminal.debug('Ctx Duagram');
+    terminal.more(ctx);
 });
 
 bot.cmd('ping', async (ctx) => {
-    bot.sendMessage(ctx, 'Pong!', { replyToMsgId: ctx.id });
-});
-
-bot.hear(/^(hi|hel+o+)/i, async (ctx) => {
-    // terminal.less(ctx);
-
-    // message in only
-    if (!ctx.out) {
-        await bot.sendMessage(ctx, '<i>Hi, too!</i>', { parse_mode: 'html' });
-    }
+    bot.sendMessage(ctx.chat.id, 'Pong!', { replyToMsgId: ctx.id });
 });
 
 bot.cmd('upload', async (ctx) => {
-    if (!ctx.out) {
-        terminal.info('Starting upload...');
-        let file = './photo.jpg';
-        return bot.sendFile(ctx, file);
-    }
+    terminal.info('Starting upload...');
+    let file = './photo.jpg';
+    return bot.sendFile(ctx.chat.id, file);
+
 });
 
 bot.start();
@@ -144,72 +134,62 @@ const bot = new duaGram({
 });
 
 // event all new message
-bot.on('message', async (ctx) => {
-    // simple log
-    terminal.less(ctx);
+bot.on('message', async (ctx, _ctx) => {
+    terminal.debug('Ctx Legacy');
+    console.log(_ctx);
+
+    terminal.debug('Ctx Duagram');
+    terminal.more(ctx);
 });
 
 bot.cmd('ping', async (ctx) => {
-    // message in only
-    if (!ctx.out) {
-        return await bot.sendMessage(ctx, '**Pong**!', { parse_mode: 'markdown', replyToMsgId: ctx.id });
-    }
-});
-
-bot.hear(/^(hi|hel+o+)/i, async (ctx) => {
-    // terminal.less(ctx);
-
-    // message in only
-    if (!ctx.out) {
-        await bot.sendMessage(ctx, '<i>Hi, too!</i>', { parse_mode: 'html' });
-    }
+    bot.sendMessage(ctx.chat.id, 'Pong!', { replyToMsgId: ctx.id });
 });
 
 bot.cmd('upload', async (ctx) => {
-    if (!ctx.out) {
-        terminal.info('Starting upload...');
-        let file = './photo.jpg';
-        return bot.sendFile(ctx, file);
-    }
+    terminal.info('Starting upload...');
+    let file = './photo.jpg';
+    return bot.sendFile(ctx.chat.id, file);
+
 });
 
 bot.cmd('start', async (ctx) => {
     // message in only
-    if (!ctx.out) {
+    if (ctx.out) return false;
 
-        if (!bot.asBotApi) {
-            return bot.sendMessage(ctx, "I'm not bot api 😅")
-        }
-
-        // if Bot API, send with Bot API can too
-
-        let chat_id = bot.getPeerId(ctx);
-
-        let reply_markup = JSON.stringify({
-            inline_keyboard: [
-                [
-                    Helper.Button.url('👥 uBotIndonesia', 'https://t.me/ubotindonesia')
-                ], [
-                    Helper.Button.text('One', 'cb1'),
-                    Helper.Button.text('Two', 'cb2')
-                ]
-            ]
-        });
-
-        let more = {
-            parse_mode: 'html',
-            reply_markup
-        }
-
-        await bot.BotApi.sendMessage(chat_id, 'This message from <b>Bot Api</b>', more)
-            .then(result => {
-                terminal.log('Result: BotApi sendMessage')
-                console.log(result);
-            })
-            .catch(error => terminal.error(error.message));
-
-
+    if (!bot.asBotApi) {
+        return bot.sendMessage(ctx, "I'm not bot api 😅")
     }
+
+    // if Bot API, send with Bot API can too
+    let reply_markup = JSON.stringify({
+        inline_keyboard: [
+            [
+                bot.Helper.Button.url('👥 uBotIndonesia', 'https://t.me/ubotindonesia')
+            ], [
+                bot.Helper.Button.text('One', 'cb1'),
+                bot.Helper.Button.text('Two', 'cb2')
+            ]
+        ]
+    });
+
+    let more = {
+        parse_mode: 'html',
+        reply_markup
+    }
+
+    return bot.BotApi.sendMessage(ctx.chat.id, 'This message from <b>Bot Api</b>', more)
+        .then(result => {
+            terminal.log('Result: BotApi sendMessage')
+            console.log(result);
+        })
+        .catch(error => terminal.error(error.message));
+
+
+});
+
+bot.cmd('version', (ctx) => {
+    return bot.sendMessage(ctx.chat.id, `<code>${JSON.stringify(bot.version, null, 2)}<code>`, { parse_mode: 'HTML' });
 });
 
 bot.start();
@@ -222,28 +202,6 @@ bot.start();
 ### Session
 
 - Generator: [https://telegram.banghasan.com/ubotstring/](https://telegram.banghasan.com/ubotstring/)
-
-### Peer
-
-Definitions of object peer:
-
-- message
-- entity
-- virtual class of user/channel (object)
-- string (username)
-- number (userID / peerId)
-- number (Bot API style) like `-1001588206363`
-
-#### Example:
-
-- `sendMessage('me', 'hi');`
-- `sendMessage('username', 'hi');`
-- `sendMessage(213567634, 'hi');`
-- `sendMessage(-1001588206363, 'hi');` // Bot API Style
-- `sendMessage(ctx, 'hi');`
-- `sendMessage(ctx.message, 'hi');` // if `ctx.message` is object, not string
-- `sendMessage(ctx.userId, 'hi');` // if `ctx.userID` is object, not number
-- `sendMessage(ctx.peerId, 'hi');` 
 
 ### Options
 
@@ -260,7 +218,7 @@ Definitions of object peer:
 | as\_bot\_api        | Login as bot API? 0 false / 1 true                             | 0           |
 | bot\_token          | Token Bot API [@botfahter](https://t.me/botfather)             |             |
 | connectionRetries   | Connection Retry                                               | 3           |
-| floodSleepThreshold | FloodWait error ? Set this                                     | 60          |
+| floodSleepThreshold | FloodWait error ? Set this                                     | 180         |
 | markRead            | Mark message history as read                                   | TRUE        |
 | cmdPrefix           | prefix for command trigger                                     | `!/.`
 
@@ -299,6 +257,8 @@ Available:
 - message
 - media
 - all class names in mtproto, according to the log details
+
+> You can see on `ctx.event` message too.
 
 Class name event example:
 
@@ -382,7 +342,7 @@ bot.middleware((ctx, next) => {
 
 bot.cmd('plus', async (ctx) => {   
     if (!ctx.out)
-        return bot.sendMessage(ctx, `Hooked: ${ctx.additional}`);
+        return bot.sendMessage(ctx.chat.id, `Hooked: ${ctx.additional}`);
 })
 ```
 
@@ -390,6 +350,7 @@ bot.cmd('plus', async (ctx) => {
 
 - [duaGram rate-limit](https://www.npmjs.com/package/duagram-ratelimit)
 
+Middleware more information: [click here](https://github.com/ubotindonesia/duagram/blob/main/docs/middleware.md).
 
 ## client
 

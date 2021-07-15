@@ -10,11 +10,8 @@ bot.middleware(async (ctx, next) => {
 
 });
 
-bot.hear(/ping/i, (ctx) => lessLog(ctx));
-bot.cmd('ping', (ctx) => lessLog(ctx));
-
 bot.hear('hi', (ctx) => {
-    return bot.sendMessage(ctx, 'Hi too..', { replyToMsgId: ctx.id });
+    return bot.sendMessage(ctx.chat.id, 'Hi too..', { replyToMsgId: ctx.id });
 })
 
 result.scanners = bot.scanners;

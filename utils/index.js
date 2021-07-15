@@ -35,37 +35,6 @@ const Util = {
         }
     },
 
-
-    toString: Object.prototype.toString,
-
-    isArray: function (obj) {
-        return toString.call(obj) === '[object Array]';
-    },
-
-    isString: function (val) {
-        return typeof val === 'string';
-    },
-
-    isNumber: function (val) {
-        return typeof val === 'number';
-    },
-
-    isObject: function (val) {
-        return val !== null && typeof val === 'object';
-    },
-
-    isDate: function (val) {
-        return toString.call(val) === '[object Date]';
-    },
-
-    isFunction: function (val) {
-        return toString.call(val) === '[object Function]';
-    },
-
-    isBlob: function (val) {
-        return toString.call(val) === '[object Blob]';
-    },
-
     forEach: function (obj, fn) {
         // Don't bother if no value provided
         if (obj === null || typeof obj === 'undefined') {
@@ -118,6 +87,20 @@ const Util = {
         }
 
         return false;
+    },
+
+    cleanObject(json) {
+        const removeNull = (obj) => {
+            Object.keys(obj).forEach(k =>
+                (obj[k] && typeof obj[k] === 'object') && removeNull(obj[k])
+                ||
+                !obj[k] && delete obj[k]
+            );
+            return obj;
+        };
+
+        let result = removeNull(json);
+        return result;
     },
 
 }

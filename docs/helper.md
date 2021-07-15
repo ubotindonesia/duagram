@@ -10,6 +10,7 @@
 | random(list)           | random array item                   | `random([‘one’,’two’,’three’])`                                        |
 | random(min, max)       | random number                       | `random(0,100)`                                                      |
 | Button                 | helper button for Bot API           |                                                                    |
+| cleanObject            | remove JSON from null, false, undefined, '', 0 | `cleanObject({one:1, empty: undefined, nol:0})` { one:1 } |
 | dateFormat             | any                                 | any                                                                |
 
 ## dateFormat

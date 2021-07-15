@@ -1,23 +1,5 @@
 const fs = require('fs');
-
-let fileLog = {
-    folderMake(path) {
-        fs.stat(path, function (err) {
-            if (err) {
-                fs.mkdir('.data', (err) => {
-                    if (err) throw err;
-                });
-            }
-        });
-    },
-    saveSession(file, data) {
-        fs.writeFile(file, data, (err) => {
-            if (err) throw err;
-            terminal.log('The session file has been saved.');
-        })
-    }
-
-}
+const util = require('util')
 
 let terminal = {}
 require('better-logging')(terminal, {
@@ -46,7 +28,11 @@ function lessLog(object) {
             }
         }
     }
-    console.log(toPrint);
+    return console.log(toPrint);
+}
+
+function moreLog(object) {
+    return console.log(util.inspect(object, false, null, true /* enable colors */));
 }
 
 const decyle = function decycle(object, replacer) {
@@ -144,7 +130,6 @@ const decyle = function decycle(object, replacer) {
 
 module.exports = {
     terminal,
-    fileLog,
-    lessLog,
+    lessLog, moreLog,
     decyle
 };

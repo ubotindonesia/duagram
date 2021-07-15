@@ -4,7 +4,7 @@ const { StringSession } = require("telegram/sessions");
 const { NewMessage } = require('telegram/events');
 const { Logger } = require("telegram/extensions");
 const input = require("input");
-const { terminal, lessLog } = require('../utils/log');
+const { terminal, lessLog, moreLog } = require('../utils/log');
 const { Api: ApiTelegram, Telegram } = require('./telegram');
 const botApi = require('./botapi');
 const Helper = require('../utils');
@@ -15,8 +15,8 @@ class DuaGram extends DuaEvent {
         this.Api = ApiTelegram;
         this.init(options);
         terminal.less = lessLog;
+        terminal.more = moreLog;
         this.terminal = terminal;
-        this.lessLog = lessLog;
     }
 
     get tg() {
@@ -80,6 +80,9 @@ class DuaGram extends DuaEvent {
         let tg = new Telegram(client);
         this.telegram = tg;
 
+        let aboutMe = await this.getMe();
+        this.storeMe(aboutMe);
+
         terminal.info("I'm ready here, waiting for your activity...");
 
         // newMessage
@@ -100,6 +103,20 @@ class DuaGram extends DuaEvent {
             this.emit('raw', update);
             this.emit(update.className, update);
         });
+    }
+
+    storeMe(data) {
+        let aboutMe = new this.DuaMessage({}, { me: data }).getMe;
+        let { id, bot, first_name, last_name, username } = aboutMe;
+        this.me = {
+            handle: data,
+            long: aboutMe,
+            short: { id, bot, first_name, last_name, username }
+        }
+    }
+
+    async getMe(peer = false) {
+        return await this.client.getMe(peer)
     }
 
     // alias
