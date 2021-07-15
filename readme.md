@@ -97,11 +97,11 @@ const bot = new duaGram({
 
 bot.on('message', async (ctx, _ctx) => {
     terminal.debug('Ctx Duagram');
-    terminal.more(ctx);
+    console.log(ctx);
 });
 
 bot.cmd('ping', async (ctx) => {
-    bot.sendMessage(ctx.chat.id, 'Pong!', { replyToMsgId: ctx.id });
+    bot.sendMessage(ctx, 'Pong!', { replyToMsgId: ctx.id });
 });
 
 bot.cmd('upload', async (ctx) => {
@@ -132,7 +132,7 @@ const bot = new duaGram({
 // event all new message
 bot.on('message', async (ctx) => {
     terminal.debug('Ctx Duagram');
-    terminal.more(ctx);
+    console.log(ctx);
 });
 
 bot.cmd('ping', async (ctx) => {
@@ -171,7 +171,7 @@ bot.cmd('start', async (ctx) => {
         reply_markup
     }
 
-    return bot.BotApi.sendMessage(ctx.chat.id, 'This message from <b>Bot Api</b>', more)
+    return bot.BotApi.sendMessage(ctx, 'This message from <b>Bot Api</b>', more)
         .then(result => {
             terminal.log('Result: BotApi sendMessage')
             console.log(result);
@@ -182,7 +182,7 @@ bot.cmd('start', async (ctx) => {
 });
 
 bot.cmd('version', (ctx) => {
-    return bot.sendMessage(ctx.chat.id, `<code>${JSON.stringify(bot.version, null, 2)}<code>`, { parse_mode: 'HTML' });
+    return bot.sendMessage(ctx, `<code>${JSON.stringify(bot.version, null, 2)}<code>`, { parse_mode: 'HTML' });
 });
 
 bot.start();

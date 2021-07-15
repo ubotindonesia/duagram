@@ -17,5 +17,5 @@ bot.middleware(async (ctx, next) => {
 
 bot.cmd('check', async (ctx) => {
     terminal.debug('Hooked!')
-    return bot.sendMessage(ctx.chat.id, `Accepted.\n\nHook message: ${ctx.hook}`, { replyToMsgId: ctx.id });
+    return bot.sendMessage(ctx, `Accepted.\n\nHook message: ${ctx.hook}`, { replyToMsgId: ctx.id });
 })

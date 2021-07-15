@@ -11,7 +11,7 @@ const bot = new duaGram({
 });
 
 bot.cmd('me', (ctx) => {
-    bot.sendMessage(ctx.chat.id, JSON.stringify(bot.me.long, null, 2));
+    bot.sendMessage(ctx, JSON.stringify(bot.me.long, null, 2));
 });
 
 bot.start();

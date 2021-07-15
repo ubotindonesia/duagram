@@ -8,6 +8,12 @@ module.exports = (ctx) => {
 
     if (typeof ctx == 'string') return ctx;
 
+    if (typeof ctx.peer?.id == 'number')
+        return ctx.peer?.id;
+
+    if (typeof ctx.chat?.id == 'number')
+        return ctx.chat?.id;
+
     if (typeof ctx.message?.message?.peerId?.userId == 'number')
         return ctx.message?.peerId?.userId;
 
