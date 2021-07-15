@@ -7,7 +7,7 @@ const bot = new duaGram({
     bot_token: 'your-token-bot',
 
     logLevel: 1, // 0 false, 1 event, 2 detail
-    logDetail: "warn", // none, error, warn, info, debug
+    logDetail: "info", // none, error, warn, info, debug
 });
 
 // event all new message

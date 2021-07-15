@@ -5,7 +5,7 @@ const bot = new duaGram({
     api_hash: 'your-api-hash',
 
     logLevel: 1, // 0 false, 1 event, 2 detail
-    logDetail: "warn", // none, error, warn, info, debug
+    logDetail: "info", // none, error, warn, info, debug
 
     session: '' // Fill in the session here if you have one, or leave it blank 
 });

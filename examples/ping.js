@@ -4,10 +4,6 @@ const { performance } = require('perf_hooks');
 const bot = new duaGram({
     api_id: 1,
     api_hash: 'your-api-hash',
-
-    logLevel: 1, 
-    logDetail: "warn", // none, error, warn, info, debug
-
     session: ''
 });
 
