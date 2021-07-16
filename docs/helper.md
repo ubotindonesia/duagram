@@ -12,6 +12,8 @@
 | Button                 | helper button for Bot API           |                                                                    |
 | cleanObject            | remove JSON from null, false, undefined, '', 0 | `cleanObject({one:1, empty: undefined, nol:0})` { one:1 } |
 | dateFormat             | any                                 | any                                                                |
+| chat.to_api            | convert userbot channel to bot api | `chat.to_api(123456789)` -100123456789 |
+| chat.from_api          | convert from userbot channel id to bot api | `chat.from_api(-100123456789)` 123456789  |
 
 ## dateFormat
 

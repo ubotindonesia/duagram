@@ -1,4 +1,4 @@
-const { duaGram, terminal } = require("duagram");
+const { duaGram } = require("duagram");
 
 const bot = new duaGram({
     api_id: 1,

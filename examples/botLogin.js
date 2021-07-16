@@ -17,7 +17,7 @@ bot.on('message', async (ctx, _ctx) => {
     console.log(_ctx);
 
     terminal.debug('Ctx Duagram');
-    terminal.more(ctx);
+    console.log(ctx);
 });
 
 bot.cmd('ping', async (ctx) => {
@@ -31,12 +31,18 @@ bot.cmd('upload', async (ctx) => {
 
 });
 
+// bot API Telegram
 bot.cmd('start', async (ctx) => {
     // message in only
     if (ctx.out) return false;
 
     if (!bot.asBotApi) {
         return bot.sendMessage(ctx, "I'm not bot api 😅")
+    }
+
+    let chat_id = ctx.chat.id;
+    if (ctx.chat.type == 'channel') {
+        chat_id = bot.Helper.chat.to_api(chat_id);
     }
 
     // if Bot API, send with Bot API can too
@@ -56,20 +62,17 @@ bot.cmd('start', async (ctx) => {
         reply_markup
     }
 
-    return bot.BotApi.sendMessage(ctx.chat.id, 'This message from <b>Bot Api</b>', more)
+    return bot.BotApi.sendMessage(chat_id, 'This message from <b>Bot Api</b>', more)
         .then(result => {
             terminal.log('Result: BotApi sendMessage')
             console.log(result);
         })
         .catch(error => terminal.error(error.message));
-
-
 });
 
 bot.cmd('version', (ctx, _ctx) => {
     let telegram = 'Telegram Client: v' + _ctx._client.__version__;
     return bot.sendMessage(ctx, `${telegram}\n\n<code>${JSON.stringify(bot.version, null, 2)}</code>`, { parse_mode: 'HTML' });
 });
-
 
 bot.start();

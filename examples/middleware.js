@@ -1,4 +1,4 @@
-const { duaGram, terminal } = require("duagram");
+const { duaGram } = require("duagram");
 
 const bot = new duaGram({
     api_id: 1,
@@ -10,12 +10,18 @@ const bot = new duaGram({
     session: '' // Fill in the session here if you have one, or leave it blank 
 });
 
+// format date Time
+bot.middleware((ctx, next) => {
+    ctx.date_format = bot.Helper.dateFormat(ctx.date*1000, 'yyyy-MM-dd HH:mm:ss');
+    next();
+});
+
 bot.middleware(async (ctx, next) => {
     ctx.hook = 'Something';
     next();
 });
 
 bot.cmd('check', async (ctx) => {
-    terminal.debug('Hooked!')
+    console.log(ctx);
     return bot.sendMessage(ctx, `Accepted.\n\nHook message: ${ctx.hook}`, { replyToMsgId: ctx.id });
 })

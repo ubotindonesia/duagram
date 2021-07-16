@@ -133,6 +133,15 @@ Util.Button = {
     }
 }
 
+Util.chat = {
+    to_api: (chat_id) => {
+        return parseInt('-100' + String(chat_id));
+    },
+    from_api: (chat_id) => {
+        parseInt(String(chat_id).replace('-100', ''));
+    }
+}
+
 Util.dateFormat = require('./date');
 
 module.exports = Util

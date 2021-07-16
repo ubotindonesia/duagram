@@ -1,14 +1,32 @@
 ## Release Version
+
+### v1.2.3
+
+- add **ctx** method: 
+    - `replyWithMarkdown(text, more)`
+    - `replyWithSendFile(file, more)`
+- add `media.data` if `ctx` contains media.
+- add **telegram** method: 
+    - `readMentions(peer)`
+    - `readMessageContents(id)`
+    - `deleteHistory(peer, more)`
+    - `deleteUserHistory(channelId, userId)`
+- add **Helper** method:
+    - `chat.to_api(chat_id)` convert from userbot channel id to bot api
+    - `chat.from_api(chat_id)` convert to userbot channel id
+
 ### v1.2.2
 
-- new `ctx.reply(text, more)` and  `ctx.replyWithHTML(text, more)`
+- add `ctx` method 
+    - `reply(text, more)` 
+    - `replyWithHTML(text, more)`
 - fix middleware (update, _ctx);
-- upgrade telegram (gramjs) client v`1.7.15`
+- upgrade telegram client (gramjs) v`1.7.15`
 
 
 ### v1.2.1
 
-- fix getPeerId for new json format (ctx.chat.id)
+- fix `getPeerId` for new json format (`ctx.chat.id`)
 
 ### v1.2.0
 
@@ -17,7 +35,7 @@
 - getMe(`peer`)
 - Helper: `cleanObject()`
 - `terminal.more()` unstopable json view data
-- option:`floodSleepThreshold` default set to `180` seconds
+- option:`floodSleepThreshold` default set to `90` seconds
 - **rewrite ctx message format**, check examples
 
 

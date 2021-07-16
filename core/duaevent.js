@@ -36,7 +36,7 @@ class DuaEvent extends EventEmitter {
             options.session = options.session || '';
             options.logDetail = options.logDetail || 'debug';
             options.logLevel = options.logLevel || 1;
-            options.floodSleepThreshold = options.floodSleepThreshold || 180;
+            options.floodSleepThreshold = options.floodSleepThreshold || 120;
 
             options.connectionRetries = options.connectionRetries || 3;
             options.markRead = options.markRead || true;
@@ -120,26 +120,24 @@ class DuaEvent extends EventEmitter {
         this.processMiddleware(result, _ctx);
     }
 
+    addMessageFromMe(update) {
+        let result = JSON.stringify(update);
+        let me = JSON.stringify(this.me.short);
+        result = result.replace(/"from":"me"/g, `"from": ${me}`);
+        result = JSON.parse(result);
+        result = removeNull(result);
+        return result;
+    }
+
     processMiddleware(update, _ctx) {
         let _update = update;
 
-        // replace from:me with me data
-        let str = JSON.stringify(update);
-        let me = JSON.stringify(this.me.short);
-        let injectMe = str.replace(/"from":"me"/g, `"from": ${me}`);
-        injectMe = JSON.parse(injectMe);
-        update = removeNull(injectMe);
+        update = this.addMessageFromMe(update, _ctx);
+        update = this.buildOn(update);
 
-        // let command = this.buildOn(update);
-        let command = {};
-        command.reply = async (text, more = {}) => {
-            return await this.sendMessage(update.chat.id, text, more);
-        };
-        command.replyWithHTML = async (text, more = {}) => {
-            return await this.sendMessage(update.chat.id, text, { parse_mode: 'html', ...more });
-        };
-
-        Object.assign(update, command);
+        if (update.media) {
+            update.media.data = _ctx.message.media;
+        }
 
         // middleware process
         if (this.middlewares.length === 0) {

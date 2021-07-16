@@ -13,6 +13,12 @@ Telegram.prototype = {
         return await this.client.invoke(data);
     },
 
+    async isChannel(peer) {
+        let peerID = this.getPeerId(peer);
+        let type = await this.client.getEntity(peerID);
+        return Boolean(type.className == "Channel");
+    },
+
     async sendMessage(peer, text, more = {}) {
         let params = {
             peer: this.getPeerId(peer),
@@ -48,14 +54,17 @@ Telegram.prototype = {
 
     async deleteMessages(peer, ids, revoke = true) {
         let peerID = this.getPeerId(peer);
-        let type = await this.client.getEntity(peerID);
         let id = typeof ids == 'number' ? [ids] : ids;
 
-        let data = type.className == "Channel"
+        let data = await this.isChannel(peer)
             ? new Api.channels.DeleteMessages({ channel: peerID, id })
             : new Api.messages.DeleteMessages({ id, revoke });
 
         return await this.invoke(data);
+    },
+
+    async deleteMessage(peer, ids, revoke = true) {
+        return await this.deleteMessages(peer, ids, revoke = true);
     },
 
     async forwardMessages(peerFrom, peerTo, ids, more = {}) {
@@ -72,10 +81,9 @@ Telegram.prototype = {
 
     async getMessages(peer, ids) {
         let peerID = this.getPeerId(peer);
-        let type = await this.client.getEntity(peerID);
         let id = typeof ids == 'number' ? [ids] : ids;
 
-        let data = type.className == "Channel"
+        let data = await this.isChannel(peer)
             ? new Api.channels.GetMessages({ channel: peerID, id })
             : new Api.messages.GetMessages({ id });
 
@@ -99,10 +107,6 @@ Telegram.prototype = {
         )
     },
 
-    async deleteMessage(peer, ids, revoke = true) {
-        return await this.deleteMessages(peer, ids, revoke = true);
-    },
-
     async getUserPhotos(peer, more = {}) {
         return await this.invoke(
             new Api.photos.GetUserPhotos({
@@ -114,13 +118,47 @@ Telegram.prototype = {
 
     async readHistory(peer, more = {}) {
         let peerID = this.getPeerId(peer);
-        let type = await this.client.getEntity(peerID);
 
-        let data = type.className == "Channel"
+        let data = await this.isChannel(peer)
             ? new Api.channels.ReadHistory({ channel: peerID, ...more })
             : new Api.messages.ReadHistory({ peer: peerID, ...more });
 
         return await this.invoke(data);
+    },
+
+    async deleteHistory(peer, more = {}) {
+        let peerID = this.getPeerId(peer);
+
+        let data = await this.isChannel(peer)
+            ? new Api.channels.DeleteHistory({ channel: peerID, ...more })
+            : new Api.messages.DeleteHistory({ peer: peerID, ...more });
+
+        return await this.invoke(data);
+    },
+
+    async deleteUserHistory(channelId, userId) {
+        return await client.invoke(
+            new this.Api.channels.DeleteUserHistory({
+                channel: channelId,
+                userId: userId
+            })
+        )
+    },
+
+    async readMentions(peer) {
+        return await this.invoke(
+            new Api.messages.ReadMentions({
+                peer: this.getPeerId(peer)
+            })
+        )
+    },
+
+    async readMessageContents(ids) {
+        let id = typeof ids == 'number' ? [ids] : ids;
+
+        return await this.invoke(
+            new Api.messages.ReadMessageContents({ id })
+        )
     },
 
     async editAdmin(peerChatId, peerUserId, more = {}) {
@@ -177,6 +215,10 @@ Telegram.prototype = {
 
     async joinGroup(peer) {
         return await this.invoke(new Api.channels.JoinChannel({ channel: this.getPeerId(peer), }))
+    },
+
+    async downloadMedia(media_data, more = {}) {
+        return await this.client.downloadMedia(this.client, media_data, { workers: 1, ...more })
     },
 
 

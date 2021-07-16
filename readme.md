@@ -90,7 +90,7 @@ const bot = new duaGram({
     session: '', 
 
     // The most common error is the FloodWait error which is caused by calling a method multiple times in a short period and acts as a spam filter from telegram. So:
-    floodSleepThreshold: 180, 
+    floodSleepThreshold: 120, 
 
     // Mark message history as read
     markRead: true 
@@ -147,12 +147,18 @@ bot.cmd('upload', async (ctx) => {
 
 });
 
-bot.cmd('start', (ctx) => {
+// bot API
+bot.cmd('start', async (ctx) => {
     // message in only
     if (ctx.out) return false;
 
     if (!bot.asBotApi) {
         return bot.sendMessage(ctx, "I'm not bot api 😅")
+    }
+
+    let chat_id = ctx.chat.id;
+    if (ctx.chat.type == 'channel') {
+        chat_id = bot.Helper.chat.to_api(chat_id);
     }
 
     // if Bot API, send with Bot API can too
@@ -172,14 +178,12 @@ bot.cmd('start', (ctx) => {
         reply_markup
     }
 
-    return bot.BotApi.sendMessage(ctx, 'This message from <b>Bot Api</b>', more)
+    return bot.BotApi.sendMessage(chat_id, 'This message from <b>Bot Api</b>', more)
         .then(result => {
             terminal.log('Result: BotApi sendMessage')
             console.log(result);
         })
         .catch(error => terminal.error(error.message));
-
-
 });
 
 bot.cmd('version', (ctx) => {
@@ -212,7 +216,7 @@ bot.start();
 | as\_bot\_api        | Login as bot API? 0 false / 1 true                             | 0           |
 | bot\_token          | Token Bot API [@botfahter](https://t.me/botfather)             |             |
 | connectionRetries   | Connection Retry                                               | 3           |
-| floodSleepThreshold | FloodWait error ? Set this                                     | 180         |
+| floodSleepThreshold | FloodWait error ? Set this                                     | 120         |
 | markRead            | Mark message history as read                                   | TRUE        |
 | cmdPrefix           | prefix for command trigger                                     | `!/.`
 
@@ -319,6 +323,10 @@ console.log(bot.version);
 - editAdmin(`peerChatId, peerUserId, more = {}`)
 - editBanned(`peerChatId, peerUserId, more = {}`)
 - joinGroup(`peer`)
+- readMentions(`peer`)
+- readMessageContents(`id`)
+- deleteHistory(`peer, more`)
+- deleteUserHistory(`channelId, userId`)
 
 ## Middleware
 
