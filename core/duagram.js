@@ -13,11 +13,13 @@ const Helper = require('../utils');
 class DuaGram extends DuaCommand {
     constructor(options) {
         super();
+        this.options = options;
         this.Api = ApiTelegram;
         this.init(options);
         terminal.less = lessLog;
         terminal.more = moreLog;
         this.terminal = terminal;
+        this.Helper = Helper;
     }
 
     get tg() {
@@ -36,11 +38,11 @@ class DuaGram extends DuaCommand {
         Logger.setLevel(logDetail);
 
         process.once('SIGINT', () => {
-            terminal.warn("Terminating process..")
+            this.terminal.warn("Terminating process..")
             process.exit(0)
         })
         process.once('SIGTERM', () => {
-            terminal.warn("Terminating process..")
+            this.terminal.warn("Terminating process..")
             process.exit(0)
         })
 
@@ -69,12 +71,12 @@ class DuaGram extends DuaCommand {
                 phoneNumber: async () => await input.text('Phone number (628xxx):'),
                 password: async () => await input.password('Password:'),
                 phoneCode: async () => await input.text('OTP code:'),
-                onError: (err) => terminal.error(err.message)
+                onError: (err) => this.terminal.error(err.message)
             });
             this.asBotApi = false;
             as_bot_api_info = 'userbot';
 
-            terminal.log("This session:");
+            this.terminal.log("This session:");
             console.log(client.session.save());
         }
 
@@ -84,10 +86,10 @@ class DuaGram extends DuaCommand {
         let aboutMe = await this.getMe();
         this.storeMe(aboutMe);
 
-        terminal.warn(`You login as [${as_bot_api_info}]`);
-        terminal.info(this.aboutMe);
+        this.terminal.warn(`You login as [${as_bot_api_info}]`);
+        this.terminal.info(this.aboutMe);
 
-        terminal.info("I'm ready here, waiting for your activity...");
+        this.terminal.info("I'm ready here, waiting for your activity...");
 
         // newMessage
         client.addEventHandler(async (ctx) => {
@@ -99,7 +101,7 @@ class DuaGram extends DuaCommand {
         // raw
         client.addEventHandler(async (update) => {
             if (logLevel >= 1) {
-                terminal.debug(`Event: ${update.className}`)
+                this.terminal.debug(`Event: ${update.className}`)
             }
             if (logLevel >= 2) {
                 console.log(update);
@@ -133,5 +135,5 @@ class DuaGram extends DuaCommand {
 }
 
 module.exports = {
-    DuaGram, Helper, terminal, lessLog
+    DuaGram, Helper, terminal
 }

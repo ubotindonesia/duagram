@@ -1,5 +1,4 @@
 const EventEmitter = require('events');
-const { terminal } = require('../utils/log');
 const DuaMessage = require('./duamessage');
 
 const removeNull = (obj) => {
@@ -12,7 +11,7 @@ const removeNull = (obj) => {
 };
 
 class DuaEvent extends EventEmitter {
-    constructor(options) {
+    constructor() {
         super();
         this.DuaMessage = DuaMessage;
         this.asBotApi;
@@ -44,8 +43,8 @@ class DuaEvent extends EventEmitter {
             this.options = options;
 
         } catch (error) {
-            terminal.error(error.message);
-            terminal.warn('Please, check your options again.');
+            this.terminal.error(error.message);
+            this.terminal.warn('Please, check your options again.');
             process.exit();
         }
     }
@@ -172,7 +171,7 @@ class DuaEvent extends EventEmitter {
 
         this.scanners.forEach((scanner) => {
             let { key, callback, stop } = scanner;
-            // terminal.debug('scanning:', `${key} match with ${text}?`);
+            // this.terminal.debug('scanning:', `${key} match with ${text}?`);
             if (!walk) return;
             if (key instanceof RegExp) {
                 let match;
@@ -191,7 +190,7 @@ class DuaEvent extends EventEmitter {
 
         });
         if (this.logLevel > 0 && found && matchPattern.length > 0) {
-            matchPattern.forEach(key => terminal.debug(`Match [${key}]: ${text}`));
+            matchPattern.forEach(key => this.terminal.debug(`Match [${key}]: ${text}`));
         }
         return found;
     }

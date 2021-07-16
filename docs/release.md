@@ -1,5 +1,11 @@
 ## Release Version
 
+### 1.2.4
+
+- terminal can be hook
+- add broadcast type: `forward`, `reply`
+
+
 ### v1.2.3
 
 - add **ctx** method: 

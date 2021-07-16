@@ -249,6 +249,7 @@ class DuaMessage {
         //console.log(messages[1]);
         let reply_to_message = false;
         if (this.more.reply) {
+            this.broadcastStore('reply');
             reply_to_message = this.Store.message[this.more.reply];
             if (reply_to_message.out) reply_to_message.from = 'me';
             if (reply_to_message.in) {
@@ -260,9 +261,10 @@ class DuaMessage {
             }
         }
 
-        // foward data
+        // forward data
         let forward_from = {}
         if (this.more.forward) {
+            this.broadcastStore('forward');
             forward_from = {
                 forward_from: this.Store[this.more.forward.type][this.more.forward.id]
             }

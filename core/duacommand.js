@@ -1,7 +1,7 @@
 const DuaEvent = require('./duaevent');
 
 class DuaCommand extends DuaEvent {
-  constructor(options) {
+  constructor() {
     super();
   }
 

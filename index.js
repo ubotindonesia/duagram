@@ -1,17 +1,16 @@
 const AppVersion = require("./version");
-const { DuaGram, terminal, lessLog, Helper } = require("./core/duagram");
+const { DuaGram, terminal } = require("./core/duagram");
 
 class duaGram extends DuaGram {
     constructor(options) {
         super(options);
         this.me = false;
-        this.Helper = Helper;
     }
 
     startBanner() {
-        terminal.info('=====================');
-        terminal.info('| The Journey Begins |');
-        terminal.info('---------------------')
+        this.terminal.info('=====================');
+        this.terminal.info('| The Journey Begins |');
+        this.terminal.info('---------------------')
     }
 
     get version() {
@@ -20,5 +19,5 @@ class duaGram extends DuaGram {
 }
 
 module.exports = {
-    duaGram, terminal, lessLog, Helper
+    duaGram, terminal
 };
