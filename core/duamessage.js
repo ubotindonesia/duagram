@@ -226,7 +226,7 @@ class DuaMessage {
         this.store();
 
         let broadcast = [];
-        let messages = this.update.messages;        
+        let messages = this.update.messages;
 
         // main messsage data
         let main = this.mainMessage;
@@ -263,7 +263,8 @@ class DuaMessage {
 
         // forward data
         let forward_from = {}
-        if (this.more.forward) {
+        if (this.more.forward && this.more.forward?.id) {
+            console.log('STORE:', this.Store);
             this.broadcastStore('forward');
             forward_from = {
                 forward_from: this.Store[this.more.forward.type][this.more.forward.id]

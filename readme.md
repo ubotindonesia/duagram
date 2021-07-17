@@ -49,7 +49,8 @@ const bot = new duaGram({
 });
 
 bot.cmd('ping', (ctx) => {
-    // bot.sendMessage(ctx, 'pong');
+    // bot.sendMessage(ctx, 'pong'); // or :
+    // bot.sendMessage(ctx.chat.id, 'pong'); // or :
     return ctx.reply('pong!');    
 });
 
@@ -212,7 +213,7 @@ bot.start();
 | api\_hash           | get it from [https://my.telegram.org](https://my.telegram.org/) |             |
 | session             | String session                                                 |             |
 | logLevel            | Show log level 0 off, 1 event name, 2 detail                   | 1           |
-| logDetail           | Event Detail (none, error, warn, info, debug)                  | debug       |
+| logDetail           | Event Detail (none, error, warn, info, debug)                  | info        |
 | as\_bot\_api        | Login as bot API? 0 false / 1 true                             | 0           |
 | bot\_token          | Token Bot API [@botfahter](https://t.me/botfather)             |             |
 | connectionRetries   | Connection Retry                                               | 3           |
@@ -246,7 +247,7 @@ bot.hear(/tea/i, callback);
 Example:
 
 ```javascript
-bot.on('raw', (ctx) => terminal.less(ctx) );
+bot.on('message', (ctx, _ctx) => terminal.less(ctx) );
 ```
 
 Available:

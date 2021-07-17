@@ -2,6 +2,7 @@
 
 ### 1.2.4
 
+- bugs fix: hidden forwarder message
 - terminal can be hook
 - add broadcast type: `forward`, `reply`
 
