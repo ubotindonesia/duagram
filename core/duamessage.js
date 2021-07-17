@@ -110,7 +110,7 @@ class DuaMessage {
             edit_date: data.editDate,
 
             mentioned: data.mentioned,
-            media: data.media ? true : false,
+            media: data.media ? this.mediaStore(data.media) : false,
             media_unread: data.mediaUnread,
 
             pinned: data.pinned,
@@ -187,9 +187,6 @@ class DuaMessage {
         // chats
         let channel = this.update.chats;
         channel.forEach(data => this.channelStore(data));
-
-        //console.log('isiSTORE', this.Store);
-
     }
 
     mediaStore(data) {
@@ -201,19 +198,23 @@ class DuaMessage {
         let mime = data[type].mimeType;
 
         let bc = typeof mime == "string" ? mime.split('/') : false;
-        // if (bc) this.broadcastStore(...bc);
+        if (bc) this.broadcastStore(...bc);
 
         if (/sticker/i.exec(data[type].mimeType)) this.broadcastStore('sticker');
 
-        return {
-            //id: data[type].id.value,
+        let result = {
+            id: data[type].id,
             type,
             date: data[type].date,
             size: data[type].size,
             mime_type: mime,
-            dc: data[type].dcId,
-            data: 'check on _ctx'
+            dc: data[type].dcId
         }
+
+        // result[type] = data[type];
+        result.raw = data;
+
+        return result;
     }
 
     get mainMessage() {
@@ -246,7 +247,6 @@ class DuaMessage {
         let chat = this.Store[data.type][data.id];
 
         // reply data
-        //console.log(messages[1]);
         let reply_to_message = false;
         if (this.more.reply) {
             this.broadcastStore('reply');
@@ -264,25 +264,16 @@ class DuaMessage {
         // forward data
         let forward_from = {}
         if (this.more.forward && this.more.forward?.id) {
-            console.log('STORE:', this.Store);
             this.broadcastStore('forward');
             forward_from = {
                 forward_from: this.Store[this.more.forward.type][this.more.forward.id]
             }
         }
 
-        // media data
-        let media = false;
-        if (messages[0].media) {
-            media = this.mediaStore(messages[0].media);
-        }
-
-
         let result = {
             ...main,
             ...forward_from,
             reply_to_message,
-            media,
             from,
             chat
         }

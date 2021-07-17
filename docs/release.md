@@ -2,7 +2,10 @@
 
 ### 1.2.4
 
-- bugs fix: hidden forwarder message
+- bugs fix: 
+    - hidden forwarder message
+    - ctx media
+- rename `media.data` to `media.raw`
 - terminal can be hook
 - add broadcast type: `forward`, `reply`
 
