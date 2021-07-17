@@ -1,8 +1,18 @@
 ## Release Version
 
+### 1.2.5
+
+`2021-07-18`
+
+- fix:
+    - media.id
+
+
 ### 1.2.4
 
-- bugs fix: 
+`2021-07-17`
+
+- fix: 
     - hidden forwarder message
     - ctx media
 - rename `media.data` to `media.raw`

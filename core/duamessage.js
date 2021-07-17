@@ -203,7 +203,7 @@ class DuaMessage {
         if (/sticker/i.exec(data[type].mimeType)) this.broadcastStore('sticker');
 
         let result = {
-            id: data[type].id,
+            id: data[type].id?.value,
             type,
             date: data[type].date,
             size: data[type].size,

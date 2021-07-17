@@ -123,12 +123,16 @@ class DuaEvent extends EventEmitter {
         // split off media
         let media = {};
         if (update.media) {
+            media.mainId = update.media.id;
             media.main = update.media.raw;
+            delete update.media.id;
             delete update.media.raw;
         }
 
         if (update.reply_to_message?.media) {
+            media.replyId = update.reply_to_message.media.id;
             media.reply = update.reply_to_message.media.raw;
+            delete update.reply_to_message.media.id;
             delete update.reply_to_message.media.raw;
         }
 
@@ -139,8 +143,14 @@ class DuaEvent extends EventEmitter {
         result = removeNull(result);
 
         // merge media
-        if (media.main) result.media.raw = media.main;
-        if (media.reply) result.reply_to_message.media.raw = media.reply;
+        if (media.main) {
+            result.media.id = media.mainId;
+            result.media.raw = media.main;
+        }
+        if (media.reply) {
+            result.reply_to_message.media.id = media.replyId;
+            result.reply_to_message.media.raw = media.reply;
+        }
         
         return result;
     }

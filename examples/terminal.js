@@ -4,14 +4,17 @@ class duaG extends duaGram {
     constructor(options) {
         super(options);
         this.myInit();
+        this.prefixTerminal = '[anu]';
     }
 
     myInit() {
+        this.oldTerminal = this.terminal;        
         let terminal = this.terminal;
-        let terminalBaru = {}
-        let prefix = '[anu]';
 
-        terminalBaru = {
+        let newTerminal = {}
+        let prefix = this.prefix.terminal;
+
+        newTerminal = {
             log(...args) { return terminal.log(prefix, ...args); },
             info(...args) { return terminal.info(prefix, ...args); },
             warn(...args) { return terminal.warn(prefix, ...args); },
@@ -19,7 +22,7 @@ class duaG extends duaGram {
             less(...args) { return terminal.less(prefix, ...args); },
             more(...args) { return terminal.more(prefix, ...args); },
         }
-        this.terminal = terminalBaru;
+        this.terminal = newTerminal;
     }
 }
 

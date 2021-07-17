@@ -94,7 +94,7 @@ const bot = new duaGram({
     floodSleepThreshold: 120, 
 
     // Mark message history as read
-    markRead: true 
+    markRead: false 
 });
 
 bot.on('message', async (ctx, _ctx) => {
@@ -125,10 +125,7 @@ const bot = new duaGram({
     api_id: 1,
     api_hash: 'your-api-hash',
     as_bot_api: true,
-    bot_token: 'your-token-bot',
-
-    logLevel: 1, // 0 false, 1 event, 2 detail
-    logDetail: "warn", // none, error, warn, info, debug
+    bot_token: 'your-token-bot'
 });
 
 // event all new message
