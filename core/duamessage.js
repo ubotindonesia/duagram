@@ -55,16 +55,26 @@ class DuaMessage {
         }
     }
 
+    getTypeClassName(data, key = '') {
+        console.log('className ISI:', data.className);
+        return data.className ? data.className.replace(key, '').toLowerCase() : false;
+    }
+
     entitiesMessage(entities) {
         this.broadcastStore('entities');
         let result = [];
-        let typeEntity = (value) => value.className.replace('MessageEntity', '').toLowerCase()
-            .replace(/texturl/i, 'text_link')
-            .replace(/botcommand/i, 'bot_command')
-            .replace(/phone/i, 'phone_number')
-            .replace(/strike/i, 'strikethrough')
-            .replace(/mentionname/i, 'text_mention')
-            ;
+        let typeEntity = (value) => {
+            let result = this.getTypeClassName(value, 'MessageEntity')
+            result
+                .replace(/texturl/i, 'text_link')
+                .replace(/botcommand/i, 'bot_command')
+                .replace(/phone/i, 'phone_number')
+                .replace(/strike/i, 'strikethrough')
+                .replace(/mentionname/i, 'text_mention')
+                ;
+            return result;
+        }
+
 
         Object.entries(entities).forEach(([key, value]) => {
             let type = typeEntity(value);

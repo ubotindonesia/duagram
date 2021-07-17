@@ -123,35 +123,28 @@ class DuaEvent extends EventEmitter {
         // split off media
         let media = {};
         if (update.media) {
-            media.mainId = update.media.id;
-            media.main = update.media.raw;
-            delete update.media.id;
-            delete update.media.raw;
+            media.main = update.media;
+            delete update.media;
         }
 
         if (update.reply_to_message?.media) {
-            media.replyId = update.reply_to_message.media.id;
-            media.reply = update.reply_to_message.media.raw;
-            delete update.reply_to_message.media.id;
-            delete update.reply_to_message.media.raw;
+            media.reply = update.reply_to_message.media;
+            delete update.reply_to_message.media;
         }
 
         let result = JSON.stringify(update);
         let me = JSON.stringify(this.me.short);
         result = result.replace(/"from":"me"/g, `"from": ${me}`);
         result = JSON.parse(result);
-        result = removeNull(result);
 
         // merge media
-        if (media.main) {
-            result.media.id = media.mainId;
-            result.media.raw = media.main;
-        }
-        if (media.reply) {
-            result.reply_to_message.media.id = media.replyId;
-            result.reply_to_message.media.raw = media.reply;
-        }
-        
+        if (media.main)
+            result.media = media.main;
+        if (media.reply)
+            result.reply_to_message.media = media.reply;
+
+
+        result = removeNull(result);
         return result;
     }
 
