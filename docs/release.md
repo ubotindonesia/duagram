@@ -4,6 +4,10 @@
 
 `2021-07-18`
 
+- add `telegram` method
+    - downloadMedia(`media, more `); // not yet final
+        - more: file_name, path, ..etc
+        - ex. `bot.tg.downloadMedia(ctx.media.raw, { path: '/tmp'})`
 - fix:
     - media.id
 

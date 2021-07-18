@@ -56,7 +56,6 @@ class DuaMessage {
     }
 
     getTypeClassName(data, key = '') {
-        console.log('className ISI:', data.className);
         return data.className ? data.className.replace(key, '').toLowerCase() : false;
     }
 

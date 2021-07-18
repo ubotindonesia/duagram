@@ -22,6 +22,7 @@
   "private": false,
   "dependencies": {
     "better-logging": "^4.5.0",
+    "file-type": "^16.5.1",
     "input": "^1.0.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
@@ -31,8 +32,8 @@
     "node": ">=14.x"
   },
   "devDependencies": {
-    "json-stringify-safe": "^5.0.1",
     "dotenv": "^10.0.0",
+    "json-stringify-safe": "^5.0.1",
     "log4js": "^6.3.0"
   }
 }

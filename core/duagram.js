@@ -37,12 +37,14 @@ class DuaGram extends DuaCommand {
 
         Logger.setLevel(logDetail);
 
-        process.once('SIGINT', () => {
-            this.terminal.warn("Terminating process..")
+        process.once('SIGINT', async () => {
+            await this.client.disconnect();
+            this.terminal.warn("Terminating process..");            
             process.exit(0)
         })
-        process.once('SIGTERM', () => {
-            this.terminal.warn("Terminating process..")
+        process.once('SIGTERM', async () => {
+            await this.client.disconnect();
+            this.terminal.warn("Terminating process..");
             process.exit(0)
         })
 
@@ -54,7 +56,7 @@ class DuaGram extends DuaCommand {
                 connectionRetries
             }
         );
-        this.client = client;
+        this.client = client;        
         client.floodSleepThreshold = floodSleepThreshold;
 
         let as_bot_api_info;
@@ -101,7 +103,7 @@ class DuaGram extends DuaCommand {
         // raw
         client.addEventHandler(async (update) => {
             if (logLevel >= 1) {
-                this.terminal.debug(`Event: ${update.className}`)
+                if (update.className) this.terminal.debug(`Event: ${update.className}`)
             }
             if (logLevel >= 2) {
                 console.log(update);
