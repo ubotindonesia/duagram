@@ -27,7 +27,7 @@ bot.cmd('download', async (ctx, _ctx) => {
         
         let timer2 = Date.now();
         let timer0 = timer2 - timer1;
-        if (timer0 > 1000) {
+        if (timer0 >= 1000) {
             timer1 = timer2;
             return bot.editMessage(ctx, message_id, `⏳ Download .. <code>${num}</code> %`, { parse_mode: 'html' })
                 .catch(e => bot.terminal.error(e.message));
