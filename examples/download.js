@@ -19,14 +19,15 @@ bot.cmd('download', async (ctx, _ctx) => {
 
     // prevent flooding message
     // just update to every second
-    let timer1 = new Date().getSeconds();
+    let timer1 = Date.now();
 
     let progressCallback = (num) => {
         num = Math.round(num * 10000) / 100;
         if (num >= 100) return true;
-        let timer2 = new Date().getSeconds();
+        
+        let timer2 = Date.now();
         let timer0 = timer2 - timer1;
-        if (timer0 > 1) {
+        if (timer0 > 1000) {
             timer1 = timer2;
             return bot.editMessage(ctx, message_id, `⏳ Download .. <code>${num}</code> %`, { parse_mode: 'html' })
                 .catch(e => bot.terminal.error(e.message));
@@ -34,12 +35,11 @@ bot.cmd('download', async (ctx, _ctx) => {
     };
 
     let result = await bot.downloadMedia(media.raw, {
-        path: '.data',
+        path: '.data',        
         progressCallback
     });
 
     return bot.editMessage(ctx, message_id, `✅ Done.\n\n📁 File name: <code>${result.path}/${result.file}</code>`, { parse_mode: 'html' })
-})
-
+});
 
 bot.start();
