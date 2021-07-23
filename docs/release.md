@@ -1,5 +1,13 @@
 ## Release Version
 
+### 1.2.6
+
+`2021-07-23`
+
+- upgrade telegram client `v1.7.23`, bug fix for downloadMedia
+- more example: `download.js`
+
+
 ### 1.2.5
 
 `2021-07-18`

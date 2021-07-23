@@ -1,4 +1,4 @@
-const { duaGram } = require("duagram");
+const { terminal, duaGram } = require("duagram");
 const fetch = require('node-fetch'); //you must install node-fetch first
 
 const bot = new duaGram({

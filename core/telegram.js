@@ -225,7 +225,7 @@ Telegram.prototype = {
     async downloadMedia(media_data, more = {}) {
         let path = more.path || '.';
 
-        let buffer = await this.client.downloadMedia(media_data, { workers: 1, sizeType: 'x', ...more })
+        let buffer = await this.client.downloadMedia(media_data, { workers: 1, ...more })
         let fileType = await FileType.fromBuffer(buffer);
 
         let file_name = more.file_name || Date.now() + '.' + fileType.ext;
@@ -233,8 +233,9 @@ Telegram.prototype = {
         try {
             fs.writeFileSync(path + '/' + file_name, buffer);
             return {
-                status: true,
-                file: file_name
+                status: true,                
+                file: file_name,
+                path
             }
         } catch (error) {
             return {

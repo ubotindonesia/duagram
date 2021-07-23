@@ -90,6 +90,10 @@ class DuaCommand extends DuaEvent {
     return await this.telegram.joinGroup(peer);
   }
 
+  async downloadMedia(media_data, more = {}) {
+    return await this.telegram.downloadMedia(media_data, more);
+  }
+
 
   async sendFile(peer, file, more = {}) {
     return await this.telegram.sendFile(peer, file, more);
