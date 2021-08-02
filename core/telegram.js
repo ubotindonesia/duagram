@@ -2,6 +2,7 @@ const { Api } = require("telegram");
 const { CustomFile } = require("telegram/client/uploads");
 const { _parseMessageText } = require("telegram/client/messageParse")
 const getPeerId = require('../utils/peer');
+const BigInt = require("big-integer");
 
 const fs = require('fs');
 const FileType = require('file-type');
@@ -26,6 +27,7 @@ Telegram.prototype = {
     async sendMessage(peer, text, more = {}) {
         let params = {
             peer: this.getPeerId(peer),
+            randomId: this.randomId(),
             message: text,
             ...more
         }
@@ -77,6 +79,7 @@ Telegram.prototype = {
             new Api.messages.ForwardMessages({
                 fromPeer: this.getPeerId(peerFrom),
                 toPeer: this.getPeerId(peerTo),
+                randomId: this.randomId(),
                 id,
                 ...more
             })
@@ -243,6 +246,10 @@ Telegram.prototype = {
                 message: error.message
             }
         }
+    },
+
+    randomId() {
+        return BigInt(-Math.floor(Math.random() * 10000000000000));
     },
 
 

@@ -1,6 +1,14 @@
 const EventEmitter = require('events');
 const DuaMessage = require('./duamessage');
 const { terminal } = require('../utils/log');
+const { StringSession, StoreSession } = require("telegram/sessions");
+const { pbkdf2Sync } = require('crypto');
+
+const keygen = (str, len = 32) => {
+    let key = pbkdf2Sync(str, 'dg2306', 100000, len, 'sha256');
+    return '.data_dg' + key.toString('hex');
+}
+
 
 const removeNull = (obj) => {
     Object.keys(obj).forEach(k =>
@@ -22,6 +30,34 @@ class DuaEvent extends EventEmitter {
         this.scanners = [];
         this.middlewares = [];
         this.terminal = terminal;
+
+        this.session_type;
+        this.keygen = keygen;
+    }
+
+    async makeSession() {
+        let options = this.options;
+        this.session_type = 'memory';
+        let session = new StringSession(options.session);
+        await session.load();
+
+        if (!options.local) return session;
+
+        let session_name = options.session_name || this.keygen(options.session);
+        let local = new StoreSession(session_name);
+
+        local.setDC(
+            session.dcId,
+            session.serverAddress,
+            session.port
+        )
+        
+        local.setAuthKey(
+            session.authKey
+        )
+
+        this.session_type = 'local';
+        return local;
     }
 
     init(options) {
@@ -31,22 +67,23 @@ class DuaEvent extends EventEmitter {
             if (!options.api_hash) throw Error('api_hash is required.');
 
             if (options.as_bot_api && !options.bot_token) throw new Error("bot_api required!");
-            if (!options.as_bot_api && !options.session) throw new Error("session required!");
+            // if (!options.as_bot_api && !options.session) throw new Error("session required!");
 
-            if (parseInt(options.api_id) < 5000) throw Error('api_id - get it from https://my.telegram.org');
-            
+            if (parseInt(options.api_id) < 5000) throw Error('api_id - mistake, get it from https://my.telegram.org');
+            if (options.bot_token.length < 20) throw Error('bot_token - mistake, get it from @botfather')
+
             if (options.cmdPrefix) {
                 this.cmdPrefix = options.cmdPrefix;
             }
 
             options.session = options.session || '';
+            options.session_name = options.session_name || false;
             options.logDetail = options.logDetail || 'debug';
             options.logLevel = options.logLevel || 1;
             options.floodSleepThreshold = options.floodSleepThreshold || 120;
 
             options.connectionRetries = options.connectionRetries || 3;
             options.markRead = options.markRead || true;
-
             this.options = options;
 
         } catch (error) {

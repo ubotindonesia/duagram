@@ -22,6 +22,7 @@
   "private": false,
   "dependencies": {
     "better-logging": "^4.5.0",
+    "big-integer": "^1.6.48",
     "file-type": "^16.5.1",
     "input": "^1.0.1",
     "request": "^2.88.2",

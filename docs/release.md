@@ -4,6 +4,8 @@
 
 `2021-08-01`
 
+- new option: `local` and `session_name`, to save to storage session. 
+- new event: on `connected`. See examples.
 - upgrade `telegram` to v`1.8.0`
 - fix
     - helper 

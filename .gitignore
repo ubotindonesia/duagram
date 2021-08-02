@@ -1,7 +1,7 @@
 .idea
 .test
 .env*
-.data
+.data*
 bak
 debug
 ref

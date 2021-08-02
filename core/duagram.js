@@ -1,5 +1,4 @@
 const { TelegramClient } = require("telegram");
-const { StringSession, StoreSession } = require("telegram/sessions");
 const { NewMessage } = require('telegram/events');
 const { Logger } = require("telegram/extensions");
 const DuaCommand = require("./duacommand");
@@ -15,8 +14,8 @@ class DuaGram extends DuaCommand {
         super();
         this.options = options;
         this.Api = ApiTelegram;
-        this.init(options);
         this.Helper = Helper;
+        this.init(options);
     }
 
     get tg() {
@@ -27,8 +26,7 @@ class DuaGram extends DuaCommand {
         this.startBanner();
         let {
             as_bot_api, bot_token,
-            logDetail, logLevel,
-            session, markRead,
+            logDetail, logLevel, markRead,
             floodSleepThreshold, connectionRetries
         } = this.options;
 
@@ -36,7 +34,7 @@ class DuaGram extends DuaCommand {
 
         process.once('SIGINT', async () => {
             await this.client.disconnect();
-            this.terminal.warn("Terminating process..");            
+            this.terminal.warn("Terminating process..");
             process.exit(0)
         })
         process.once('SIGTERM', async () => {
@@ -45,15 +43,17 @@ class DuaGram extends DuaCommand {
             process.exit(0)
         })
 
+        let session = await this.makeSession();
+
         const client = new TelegramClient(
-            new StringSession(session),
+            session,
             this.options.api_id,
             this.options.api_hash,
             {
                 connectionRetries
             }
         );
-        this.client = client;        
+        this.client = client;
         client.floodSleepThreshold = floodSleepThreshold;
 
         let as_bot_api_info;
@@ -86,9 +86,12 @@ class DuaGram extends DuaCommand {
         this.storeMe(aboutMe);
 
         this.terminal.warn(`You login as [${as_bot_api_info}]`);
+        this.terminal.warn(`Store mode: ${this.session_type}`);
         this.terminal.info(this.aboutMe);
 
         this.terminal.info("I'm ready here, waiting for your activity...");
+
+        this.emit('connected', aboutMe);
 
         // newMessage
         client.addEventHandler(async (ctx) => {
@@ -128,7 +131,7 @@ class DuaGram extends DuaCommand {
         if (username) me += '[username: @' + username + '] ';
         if (phone) me += '[phone: +' + phone + '] ';
         return me;
-    }    
+    }
 
     // end off DuaGram class
 }
