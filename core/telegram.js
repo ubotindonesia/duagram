@@ -236,7 +236,7 @@ Telegram.prototype = {
         try {
             fs.writeFileSync(path + '/' + file_name, buffer);
             return {
-                status: true,                
+                status: true,
                 file: file_name,
                 path
             }

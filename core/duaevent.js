@@ -70,7 +70,7 @@ class DuaEvent extends EventEmitter {
             // if (!options.as_bot_api && !options.session) throw new Error("session required!");
 
             if (parseInt(options.api_id) < 5000) throw Error('api_id - mistake, get it from https://my.telegram.org');
-            if (options.bot_token.length < 20) throw Error('bot_token - mistake, get it from @botfather')
+            if (options.as_bot_api && options.bot_token.length < 20) throw Error('bot_token - mistake, get it from @botfather')
 
             if (options.cmdPrefix) {
                 this.cmdPrefix = options.cmdPrefix;
