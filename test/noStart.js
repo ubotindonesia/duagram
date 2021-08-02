@@ -1,4 +1,4 @@
-const { lessLog, terminal, duaGram, Helper } = require("..");
+const { terminal, duaGram, Helper } = require("..");
 let options = require('./config');
 let result = {};
 
@@ -18,7 +18,7 @@ result.scanners = bot.scanners;
 result.middleware = bot.middleware;
 result.version = bot.version;
 
-
+result.random = bot.Helper.random(['satu', 'dua', 'tiga']);
 
 terminal.debug('Result noStartBot');
 console.log(result);

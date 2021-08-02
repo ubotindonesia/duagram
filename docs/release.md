@@ -1,5 +1,15 @@
 ## Release Version
 
+### 1.2.7
+
+`2021-08-01`
+
+- upgrade `telegram` to v`1.8.0`
+- fix
+    - helper 
+        -`random`
+        - `forEach`
+
 ### 1.2.6
 
 `2021-07-23`

@@ -1,5 +1,6 @@
 const EventEmitter = require('events');
 const DuaMessage = require('./duamessage');
+const { terminal } = require('../utils/log');
 
 const removeNull = (obj) => {
     Object.keys(obj).forEach(k =>
@@ -19,7 +20,8 @@ class DuaEvent extends EventEmitter {
         this.BotApi = false;
         this.client = false;
         this.scanners = [];
-        this.middlewares = []
+        this.middlewares = [];
+        this.terminal = terminal;
     }
 
     init(options) {
@@ -27,7 +29,12 @@ class DuaEvent extends EventEmitter {
             if (typeof options !== 'object') throw Error('Please, check documentation to starting bot.');
             if (!options.api_id) throw Error('api_id is required.');
             if (!options.api_hash) throw Error('api_hash is required.');
+
+            if (options.as_bot_api && !options.bot_token) throw new Error("bot_api required!");
+            if (!options.as_bot_api && !options.session) throw new Error("session required!");
+
             if (parseInt(options.api_id) < 5000) throw Error('api_id - get it from https://my.telegram.org');
+            
             if (options.cmdPrefix) {
                 this.cmdPrefix = options.cmdPrefix;
             }

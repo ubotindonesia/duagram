@@ -47,7 +47,7 @@ const Util = {
             obj = [obj];
         }
 
-        if (this.isArray(obj)) {
+        if (Array.isArray(obj)) {
             // Iterate over array values
             for (var i = 0, l = obj.length; i < l; i++) {
                 fn.call(null, obj[i], i, obj);
@@ -73,7 +73,7 @@ const Util = {
 
     random: function () {
         // random(list) : item
-        if (arguments.length === 1 && this.isArray(arguments[0])) {
+        if (arguments.length === 1 && Array.isArray(arguments[0]) ) {
             var list = arguments[0];
             return list[Math.floor((Math.random() * list.length))];
         }

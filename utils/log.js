@@ -128,6 +128,9 @@ const decyle = function decycle(object, replacer) {
     }(object, "$"));
 };
 
+terminal.less = lessLog;
+terminal.more = moreLog;
+
 module.exports = {
     terminal,
     lessLog, moreLog,

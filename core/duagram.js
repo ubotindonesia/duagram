@@ -1,10 +1,10 @@
 const { TelegramClient } = require("telegram");
-const { StringSession } = require("telegram/sessions");
+const { StringSession, StoreSession } = require("telegram/sessions");
 const { NewMessage } = require('telegram/events');
 const { Logger } = require("telegram/extensions");
 const DuaCommand = require("./duacommand");
 const input = require("input");
-const { terminal, lessLog, moreLog } = require('../utils/log');
+
 const { Api: ApiTelegram, Telegram } = require('./telegram');
 const botApi = require('./botapi');
 const Helper = require('../utils');
@@ -16,9 +16,6 @@ class DuaGram extends DuaCommand {
         this.options = options;
         this.Api = ApiTelegram;
         this.init(options);
-        terminal.less = lessLog;
-        terminal.more = moreLog;
-        this.terminal = terminal;
         this.Helper = Helper;
     }
 
@@ -137,5 +134,5 @@ class DuaGram extends DuaCommand {
 }
 
 module.exports = {
-    DuaGram, Helper, terminal
+    DuaGram
 }

@@ -45,12 +45,14 @@ const { duaGram } = require("duagram");
 
 const bot = new duaGram({
     api_id: 1,
-    api_hash: 'your-api-hash'
+    api_hash: 'your-api-hash',
+    // Fill in the session here if you have one, or leave it blank
+    session: '', 
 });
 
 bot.cmd('ping', (ctx) => {
-    // bot.sendMessage(ctx, 'pong'); // or :
-    // bot.sendMessage(ctx.chat.id, 'pong'); // or :
+    // bot.sendMessage(ctx, 'pong'); // or:
+    // bot.sendMessage(ctx.chat.id, 'pong'); // or:
     return ctx.reply('pong!');    
 });
 
@@ -76,6 +78,8 @@ BotFather will give you a token, something like `123456789:AbCdfGhIJKlmNoQQRsTUV
 > Do you need more example? [Check this page](https://github.com/ubotindonesia/duagram/tree/main/examples).
 
 ### User Login
+
+<details><summary>source example</summary>
 
 ```javascript
 const { duaGram, terminal } = require("duagram");
@@ -116,7 +120,13 @@ bot.cmd('upload', async (ctx) => {
 bot.start();
 ```
 
+</details>
+
 ### Bot Login
+
+Login with Bot API Token
+
+<details><summary>source example</summary>
 
 ```javascript
 const { duaGram, terminal, Helper } = require("duagram");
@@ -190,6 +200,8 @@ bot.cmd('version', (ctx) => {
 
 bot.start();
 ```
+
+</details>
 
 ## Documentation
 
@@ -354,6 +366,8 @@ Middleware more information: [click here](https://github.com/ubotindonesia/duagr
 
 ## client
 
+<details><summary>Client Details</summary>
+
 ### Method
 
 - start()
@@ -392,7 +406,11 @@ Middleware more information: [click here](https://github.com/ubotindonesia/duagr
 - destroy()
 - ... etc
 
-## Ref
+</details>
+
+## Reference
+
+<details><summary>List details</summary>
 
 - [API Telegram](https://core.telegram.org/)
 - [Schema](https://core.telegram.org/schema)
@@ -404,6 +422,8 @@ Middleware more information: [click here](https://github.com/ubotindonesia/duagr
 - [NodeJS](https://nodejs.org/dist/latest/docs/api/)
 - [MDN Mozilla](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 - [VS Codium](https://vscodium.com/)
+
+</details>
 
 ## Last Words
 
