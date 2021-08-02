@@ -5,11 +5,12 @@
 `2021-08-01`
 
 - new option: `local` and `session_name`, to save to storage session. 
-- new event: on `connected`. See examples.
+- new event: on `connected`. See [examples](https://github.com/ubotindonesia/duagram/blob/dev/examples/).
 - upgrade `telegram` to v`1.8.0`
-- fix
+- bugs fix
+    - session: recognise _seen_ user after launch
     - helper 
-        -`random`
+        - `random`
         - `forEach`
 
 ### 1.2.6

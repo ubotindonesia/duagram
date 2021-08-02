@@ -220,14 +220,16 @@ bot.start();
 | --------------------- | ---------------------------------------------------------------- | ------------- |
 | api\_id             | get it from [https://my.telegram.org](https://my.telegram.org/) |             |
 | api\_hash           | get it from [https://my.telegram.org](https://my.telegram.org/) |             |
-| session             | String session                                                 |             |
+| session             | session string                                                 |             |
+| session_name | Session name | - |
+| local | with local database | `false` |
 | logLevel            | Show log level 0 off, 1 event name, 2 detail                   | 1           |
 | logDetail           | Event Detail (none, error, warn, info, debug)                  | info        |
 | as\_bot\_api        | Login as bot API? 0 false / 1 true                             | 0           |
 | bot\_token          | Token Bot API [@botfahter](https://t.me/botfather)             |             |
 | connectionRetries   | Connection Retry                                               | 3           |
-| floodSleepThreshold | FloodWait error ? Set this                                     | 120         |
-| markRead            | Mark message history as read                                   | TRUE        |
+| floodSleepThreshold | FloodWait error ? Set this                                     | `120`         |
+| markRead            | Mark message history as read                                   | `TRUE`        |
 | cmdPrefix           | prefix for command trigger                                     | `!/.`
 
 ### Event
@@ -261,6 +263,7 @@ bot.on('message', (ctx, _ctx) => terminal.less(ctx) );
 
 Available:
 
+- connected
 - raw
 - message
 - media

@@ -2,6 +2,8 @@
 
 Check in `ctx.event`
 
+- connected
+
 ### Message
 
 - raw

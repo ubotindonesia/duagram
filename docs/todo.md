@@ -1,6 +1,6 @@
 ## To Do
 
-- [ ] store to persistent (storage) memory
+- [x] store to persistent (storage) memory
 - [x] middleware
 - [ ] chat.properties (low)
 - [ ] Edit event: `UpdateEditChannelMessage` ...
@@ -9,4 +9,4 @@
 - [x] download progress
 - [ ] upload file
 - [ ] upload progress
-- [ ] parse result sendMessage
+- [ ] parsing sendMessage result
