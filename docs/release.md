@@ -1,5 +1,9 @@
 ## Release Version
 
+### 1.2.8
+
+* incosisten supergroup id
+
 ### 1.2.7
 
 `2021-08-01`

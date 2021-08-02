@@ -1,6 +1,6 @@
 {
   "name": "duagram",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "Telegram Framework for userbot or bot api",
   "main": "index.js",
   "homepage": "https://t.me/duagram",

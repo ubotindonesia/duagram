@@ -1,5 +1,6 @@
 module.exports = (ctx) => {
     if (typeof ctx == 'number') {
+        return ctx;
         if (ctx < 0) {
             return parseInt(String(ctx).replace('-100', ''));
         }
