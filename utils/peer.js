@@ -8,40 +8,7 @@ function typeCheck(value) {
     return type.toLowerCase();
 }
 
-/*
-// chat biasa
-{
-  id: 1210,
-  fromId: VirtualClass {
-    CONSTRUCTOR_ID: 2645671021,
-    SUBCLASS_OF_ID: 47470215,
-    className: 'PeerUser',
-    classType: 'constructor',
-    userId: 213567634
-  },
-  peerId: VirtualClass {
-    CONSTRUCTOR_ID: 3134252475,
-    SUBCLASS_OF_ID: 47470215,
-    className: 'PeerChat',
-    classType: 'constructor',
-    chatId: 544365226
-  },
-
-//chat supergrup
-
-  peerId: VirtualClass {
-    CONSTRUCTOR_ID: 3185435954,
-    SUBCLASS_OF_ID: 47470215,
-    className: 'PeerChannel',
-    classType: 'constructor',
-    channelId: 1205955474
-  },
-
-  //
-
-  */
-
-module.exports = (ctx) => {
+module.exports = (ctx, event = 'none') => {
     if (typeof ctx == 'number') {
         return ctx;
         if (ctx < 0) {
@@ -52,9 +19,6 @@ module.exports = (ctx) => {
 
     if (typeof ctx == 'string') return ctx;
 
-    // console.log('TIPE:', typeCheck(ctx));
-
-    //if (ctx.hasOwnProperty('peer'))
     if (typeof ctx.peer?.id == 'number')
         return ctx.peer?.id;
 

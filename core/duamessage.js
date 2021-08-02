@@ -48,7 +48,8 @@ class DuaMessage {
 
     fieldType(data) {
         if (!data) return false;
-        let type = data.className == 'PeerUser' ? 'user' : 'channel';
+        //let type = data.className == 'PeerUser' ? 'user' : 'channel';
+        let type = data.className.replace('Peer', '').toLowerCase();
         return {
             type,
             id: data[type + 'Id']
