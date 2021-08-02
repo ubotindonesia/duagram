@@ -4,9 +4,9 @@ const { terminal } = require('../utils/log');
 const { StringSession, StoreSession } = require("telegram/sessions");
 const { pbkdf2Sync } = require('crypto');
 
-const keygen = (str, len = 32) => {
-    let key = pbkdf2Sync(str, 'dg2306', 100000, len, 'sha256');
-    return '.data_dg' + key.toString('hex');
+const keygen = (str, len = 8) => {
+    let key = pbkdf2Sync(str, 'dg', 100000, len, 'sha256');
+    return '.dg' + key.toString('hex');
 }
 
 

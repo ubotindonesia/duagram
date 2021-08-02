@@ -9,6 +9,7 @@ function typeCheck(value) {
 }
 
 module.exports = (ctx, event = 'none') => {
+    if (!ctx) throw Error('Unknown peer');
     if (typeof ctx == 'number') {
         return ctx;
         if (ctx < 0) {

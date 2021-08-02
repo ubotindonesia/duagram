@@ -2,6 +2,7 @@
 .test
 .env*
 .data*
+.dg*
 bak
 debug
 ref

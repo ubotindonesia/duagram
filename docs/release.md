@@ -1,8 +1,10 @@
 ## Release Version
 
-### 1.2.8
 
-* incosisten supergroup id
+### 1.3.1
+
+- shorten name session to 8 unique char (default)
+- [x] known bugs for basic chat, this app not work
 
 ### 1.2.7
 
