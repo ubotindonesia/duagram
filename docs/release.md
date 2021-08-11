@@ -1,7 +1,11 @@
 ## Release Version
 
+### 1.2.4
 
-### 1.3.1
+- fix version number
+- upgrade telegram `1.8.3`
+
+### 1.2.3
 
 - shorten name session to 8 unique char (default)
 - [x] known bugs for basic chat, this app not work

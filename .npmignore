@@ -1,6 +1,7 @@
 .idea
 .test
 .env*
+.dg*
 .data
 asset
 bak
