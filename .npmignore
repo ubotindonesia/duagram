@@ -1,5 +1,6 @@
 .idea
 .test
+test
 .env*
 .dg*
 .data
