@@ -51,7 +51,7 @@ class DuaEvent extends EventEmitter {
             session.serverAddress,
             session.port
         )
-        
+
         local.setAuthKey(
             session.authKey
         )
@@ -102,7 +102,7 @@ class DuaEvent extends EventEmitter {
 
     fieldType(data) {
         if (!data) return false;
-        let type = data.className.replace('Peer','').toLowerCase();
+        let type = data.className.replace('Peer', '').toLowerCase();
         return {
             type,
             id: data[type + 'Id']
@@ -189,6 +189,13 @@ class DuaEvent extends EventEmitter {
 
 
         result = removeNull(result);
+
+        if (this.options.markRead)
+            if (!this.options.as_bot_api) {
+                this.terminal.debug('markRead:', update.id || 'kosong');
+                this.telegram.readHistory(result);
+            }
+
         return result;
     }
 

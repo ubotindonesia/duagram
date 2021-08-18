@@ -411,10 +411,6 @@ Middleware more information: [click here](https://github.com/ubotindonesia/duagr
 
 </details>
 
-## Known Bugs
-
-- &#10062; Not Work to Basic Group
-
 ## Reference
 
 <details><summary>List details</summary>

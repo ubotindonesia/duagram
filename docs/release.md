@@ -3,6 +3,7 @@
 ### 1.3.2
 
 - add method: `use` for alias `middleware`
+- fix readhistory basic groups!
 
 ### 1.3.1
 

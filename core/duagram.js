@@ -96,7 +96,7 @@ class DuaGram extends DuaCommand {
         // newMessage
         client.addEventHandler(async (ctx) => {
             let message = ctx.message;
-            if (markRead && !as_bot_api) tg.readHistory(message);
+            // if (markRead && !as_bot_api) tg.readHistory(message);
             this.processMessage(ctx);
         }, new NewMessage({}));
 
