@@ -4,6 +4,7 @@
 
 - add method: `use` for alias `middleware`
 - fix readhistory basic groups!
+- fix options markRead
 
 ### 1.3.1
 
