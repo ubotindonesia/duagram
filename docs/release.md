@@ -1,5 +1,14 @@
 ## Release Version
 
+### 1.3.1
+
+`2021-08-18`
+
+- private groups WORKS!
+- bug known: private group can't auto readhistory
+- upgrade telegram `1.8.6`
+    - fix download file until 2 GB
+
 ### 1.3.0
 
 - fix version number

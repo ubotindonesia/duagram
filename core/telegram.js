@@ -20,8 +20,14 @@ Telegram.prototype = {
 
     async isChannel(peer) {
         let peerID = this.getPeerId(peer);
-        let type = await this.client.getEntity(peerID);
-        return Boolean(type.className == "Channel");
+        let result;
+        try {
+            let type = await this.client.getEntity(peerID);
+            result = Boolean(type.className == "Channel");
+        } catch (error) {
+            result = false;
+        }
+        return result;
     },
 
     async sendMessage(peer, text, more = {}) {

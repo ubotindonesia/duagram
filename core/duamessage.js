@@ -254,7 +254,14 @@ class DuaMessage {
 
         // chat data
         let data = this.chat || this.fieldType(messages[0].peerId);
-        let chat = this.Store[data.type][data.id];
+
+        let chat;
+        if (this.chat?.type == 'chat') {            
+            chat = this.Store.channel[this.chat.id]
+        } else {
+            chat = this.Store[data.type][data.id];
+        }
+
 
         // reply data
         let reply_to_message = false;
