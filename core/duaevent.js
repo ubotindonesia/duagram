@@ -83,7 +83,7 @@ class DuaEvent extends EventEmitter {
             options.floodSleepThreshold = options.floodSleepThreshold || 120;
 
             options.connectionRetries = options.connectionRetries || 3;
-            options.markRead = options.markRead || true;
+            options.markRead = options.hasOwnProperty('markRead') ? options.markRead : true;
             this.options = options;
 
         } catch (error) {
