@@ -7,7 +7,7 @@ You can imagine middleware as a chain of logic connection your bot to the Telegr
 Middleware normally takes two parameters `(ctx, next)`, `ctx` is the context for one Telegram update, `next` is a function that is invoked to execute the downstream middleware. It returns a Promise with a then function for running code after completion.
 
 ```javascript
-bot.middleware((ctx, next) => {
+bot.use((ctx, next) => {
     ctx.additional = 'message test from middleware';
     next();
 });

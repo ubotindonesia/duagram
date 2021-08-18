@@ -277,6 +277,10 @@ class DuaEvent extends EventEmitter {
         this.middlewares.push(callback);
     }
 
+    use(callback) {
+        this.middlewares.push(callback);
+    }
+
 }
 
 module.exports = DuaEvent;

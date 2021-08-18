@@ -1,5 +1,9 @@
 ## Release Version
 
+### 1.3.2
+
+- add method: `use` for alias `middleware`
+
 ### 1.3.1
 
 `2021-08-18`
