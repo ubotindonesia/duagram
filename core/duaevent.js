@@ -190,11 +190,9 @@ class DuaEvent extends EventEmitter {
 
         result = removeNull(result);
 
-        if (this.options.markRead)
-            if (!this.options.as_bot_api) {
-                this.terminal.debug('markRead:', update.id || 'kosong');
-                this.telegram.readHistory(result);
-            }
+        if (this.options.markRead && !this.options.as_bot_api) {
+            this.telegram.readHistory(result);
+        }
 
         return result;
     }
