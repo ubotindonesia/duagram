@@ -1,4 +1,3 @@
-
 let package = require('./package.json')
 
 module.exports = {
@@ -7,22 +6,11 @@ module.exports = {
     desc: package.description,
     repo: package.repository,
     url: 'https://t.me/duagram',
-    support: '@botindonesia',
+    support: '@ubotindonesia',
 
     release: {
         first: 'July 2021',
-        last: 'July 2021',
-    },
-    
-    dev: {
-        coder: package.author,
-        email: 'banghasan@gmail.com',
-        telegram: '@hasanudinhs',
-        web: 'https://www.banghasan.com'
-    },
-
-    contributor : {
-        //
+        last: 'August 2021',
     },
 
     system: `${process.platform} ${process.arch} nodejs ${process.version}`
