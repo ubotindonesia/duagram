@@ -204,6 +204,9 @@ class DuaMessage {
         let type = data.className.replace('MessageMedia', '').toLowerCase();
         this.broadcastStore(type);
 
+        // console.log(' >>> MEDIA:', data);
+        if (!data[type]) return { raw: data };
+
         let mime = data[type].mimeType;
 
         let bc = typeof mime == "string" ? mime.split('/') : false;
@@ -255,7 +258,7 @@ class DuaMessage {
         let data = this.chat || this.fieldType(messages[0].peerId);
 
         let chat;
-        if (this.chat?.type == 'chat') {            
+        if (this.chat?.type == 'chat') {
             chat = this.Store.channel[this.chat.id]
         } else {
             chat = this.Store[data.type][data.id];

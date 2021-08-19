@@ -1,9 +1,11 @@
 
+let package = require('./package.json')
+
 module.exports = {
-    name: 'duaGram',
-    number: '1.3.1',
-    desc: 'Telegram Bot Framework',
-    repo: 'https://github.com/ubotindonesia/duagram',
+    name: package.name,
+    number: package.version,
+    desc: package.description,
+    repo: package.repository,
     url: 'https://t.me/duagram',
     support: '@botindonesia',
 
@@ -13,10 +15,10 @@ module.exports = {
     },
     
     dev: {
-        coder: 'Hasanudin H Syafaat',
+        coder: package.author,
         email: 'banghasan@gmail.com',
         telegram: '@hasanudinhs',
-        web: 'https://banghasan.com'
+        web: 'https://www.banghasan.com'
     },
 
     contributor : {
