@@ -13,7 +13,7 @@ const bot = new duaGram({
 
 bot.cmd("downloadImage", async (ctx) => {   
 	fetch("https://raw.githubusercontent.com/ubotindonesia/duagram/main/asset/2gram%20banner.jpg")
-	.then(res => res.buffer())
+	.then(res => res)
 	.then(async buffer => {
 		let wait = await bot.sendMessage(ctx, 'Downloading...', { replyToMsgId: ctx.id });
 		var chat_id, message_id;
@@ -29,7 +29,7 @@ bot.cmd("downloadImage", async (ctx) => {
 			var log = `\r[${num}%]`
 			return bot.client.editMessage(chat_id, {message: message_id, text: 'Downloading... '+log}).catch(e => terminal.error(e.message))
 		}
-		bot.client.sendFile(chat_id, {file: buffer, replyTo: ctx.id, progressCallback: downEdit})
+		bot.client.sendFile(chat_id, {file: buffer.url, replyTo: ctx.id, progressCallback: downEdit})
 		.then(() => bot.deleteMessage(chat_id, message_id))
 	})
 })
