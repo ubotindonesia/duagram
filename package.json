@@ -31,7 +31,7 @@
     "telegram": "^1.8.10"
   },
   "engines": {
-    "node": ">=14.x"
+    "node": ">=14.0.0"
   },
   "devDependencies": {
     "dotenv": "^10.0.0",
