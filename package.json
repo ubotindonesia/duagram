@@ -6,6 +6,7 @@
   "homepage": "https://t.me/duagram",
   "bugs": "https://github.com/ubotindonesia/duagram/issues",
   "repository": "https://github.com/ubotindonesia/duagram",
+  "engineStrict" : true,
   "scripts": {
     "start": "reset && node debug/dmessage.js",
     "test": "node test/start.js"
