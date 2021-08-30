@@ -1,4 +1,10 @@
 ## Release Version
+
+### 1.3.4
+
+- telegram `1.8.10`
+- shorten release info version
+
 ### 1.3.3
 
 `2021-08-19`
