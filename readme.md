@@ -51,6 +51,7 @@ const bot = new duaGram({
 });
 
 bot.cmd('ping', (ctx) => {
+    console.log(ctx);
     // bot.sendMessage(ctx, 'pong'); // or:
     // bot.sendMessage(ctx.chat.id, 'pong'); // or:
     return ctx.reply('pong!');    
@@ -101,12 +102,12 @@ const bot = new duaGram({
     markRead: false 
 });
 
-bot.on('message', async (ctx, _ctx) => {
+bot.on('message', (ctx, _ctx) => {
     terminal.debug('Ctx Duagram');
     console.log(ctx);
 });
 
-bot.cmd('ping', async (ctx) => {
+bot.cmd('ping', (ctx) => {
     bot.sendMessage(ctx, 'Pong!', { replyToMsgId: ctx.id });
 });
 
@@ -115,6 +116,10 @@ bot.cmd('upload', async (ctx) => {
     let file = './photo.jpg';
     return bot.sendFile(ctx.chat.id, file);
 
+});
+
+bot.cmd('version', (ctx) => {
+    return bot.sendMessage(ctx, `<code>${JSON.stringify(bot.version, null, 2)}<code>`, { parse_mode: 'HTML' });
 });
 
 bot.start();

@@ -172,16 +172,18 @@ class DuaMessage {
 
     channelStore(data) {
         let id = data.id;
+        let type = data.className.toLowerCase();
+        if (type == 'channel') id = Number('-100' + id);
         let channel = {
             id,
-            type: data.className.toLowerCase(),
+            type,
             first_name: data.firstName,
             last_name: data.lastName,
             username: data.username,
             verified: data.verified,
             title: data.title,
         };
-        this.Store.channel[id] = channel;
+        this.Store.channel[data.id] = channel;
     };
 
     store() {
@@ -238,6 +240,8 @@ class DuaMessage {
     get context() {
         this.store();
 
+        // console.log('==> ISI STORE', this.Store);
+        
         let broadcast = [];
         let messages = this.update.messages;
 

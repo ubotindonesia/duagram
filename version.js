@@ -10,7 +10,7 @@ module.exports = {
 
     release: {
         first: 'July 2021',
-        last: 'August 2021',
+        last: 'September 2021',
     },
 
     system: `${process.platform} ${process.arch} nodejs ${process.version}`
