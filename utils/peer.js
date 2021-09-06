@@ -26,6 +26,10 @@ module.exports = (ctx, event = 'none') => {
         return ctx;
     }
 
+    if (ctx.chat && ctx.chat.id) {
+        return ctx.chat.id;
+    }
+
     if (ctx.peerId) {
         let peer = fieldType(ctx.peerId);
         return peer.id;
