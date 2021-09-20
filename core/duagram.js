@@ -27,7 +27,7 @@ class DuaGram extends DuaCommand {
         let {
             as_bot_api, bot_token,
             logDetail, logLevel, markRead,
-            floodSleepThreshold, connectionRetries
+            floodSleepThreshold, connectionRetries, useWSS, more
         } = this.options;
 
         Logger.setLevel(logDetail);
@@ -50,7 +50,9 @@ class DuaGram extends DuaCommand {
             this.options.api_id,
             this.options.api_hash,
             {
-                connectionRetries
+                connectionRetries,
+                useWSS,
+                ...more
             }
         );
         this.client = client;

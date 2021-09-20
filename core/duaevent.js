@@ -76,6 +76,8 @@ class DuaEvent extends EventEmitter {
                 this.cmdPrefix = options.cmdPrefix;
             }
 
+            options.useWSS = options.useWSS || false;
+
             options.session = options.session || '';
             options.session_name = options.session_name || false;
             options.logDetail = options.logDetail || 'debug';
@@ -84,6 +86,8 @@ class DuaEvent extends EventEmitter {
 
             options.connectionRetries = options.connectionRetries || 3;
             options.markRead = options.hasOwnProperty('markRead') ? options.markRead : true;
+
+            options.more = options.more || {};
             this.options = options;
 
         } catch (error) {
