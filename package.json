@@ -28,7 +28,7 @@
     "input": "^1.0.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
-    "telegram": "^1.9.1"
+    "telegram": "^2.2.3"
   },
   "engines": {
     "node": ">=14.0.0"
