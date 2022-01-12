@@ -1,5 +1,9 @@
 ## Release Version
 
+### 1.3.8
+
+- telegram `2.3.0`
+
 ### 1.3.4
 
 - telegram `1.8.10`
